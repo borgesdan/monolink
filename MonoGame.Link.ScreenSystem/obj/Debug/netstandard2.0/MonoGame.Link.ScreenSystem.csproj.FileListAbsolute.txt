@@ -1,0 +1,12 @@
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\bin\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.deps.json
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\bin\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.dll
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\bin\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.pdb
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\bin\Debug\netstandard2.0\MonoGame.Link.Common.dll
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\bin\Debug\netstandard2.0\MonoGame.Link.Common.pdb
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.csprojAssemblyReference.cache
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.AssemblyInfoInputs.cache
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.AssemblyInfo.cs
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.csproj.CoreCompileInputs.cache
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.csproj.CopyComplete
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.dll
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.ScreenSystem\obj\Debug\netstandard2.0\MonoGame.Link.ScreenSystem.pdb

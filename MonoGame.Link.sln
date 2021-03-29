@@ -1,0 +1,105 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Link", "MonoGame.Link\MonoGame.Link.csproj", "{46536216-375F-4A33-8F0D-EFC9C0B79CB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Link.Common", "MonoGame.Link.Common\MonoGame.Link.Common.csproj", "{C68E7692-06F1-49D6-81E2-6CC9B1C565C7}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame.Link.Common.Shared", "MonoGame.Link.Common.Shared\MonoGame.Link.Common.Shared.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame.Link.EntitySystem.Shared", "MonoGame.Link.EntitySystem.Shared\MonoGame.Link.EntitySystem.Shared.shproj", "{91DF435B-940C-4C90-B2F7-58F4C772B4D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Link.EntitySystem", "MonoGame.Link.EntitySystem\MonoGame.Link.EntitySystem.csproj", "{5F2AE03D-B151-4A21-B551-F97616E9A7DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{CFC98419-D71A-402B-9174-364D957F1E79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{DE9F4DD4-0B20-47AE-A622-176A441971E9}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame.Link.InputSystem.Shared", "MonoGame.Link.InputSystem.Shared\MonoGame.Link.InputSystem.Shared.shproj", "{887D5A4C-4890-4BA0-ADA7-12CF9366279D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Link.InputSystem", "MonoGame.Link.InputSystem\MonoGame.Link.InputSystem.csproj", "{70A6F4E4-A9B2-458A-B750-766717EDCDCA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame.Link.ScreenSystem.Shared", "MonoGame.Link.ScreenSystem.Shared\MonoGame.Link.ScreenSystem.Shared.shproj", "{418433D3-5F4D-4A91-8693-6125A3299197}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.Link.ScreenSystem", "MonoGame.Link.ScreenSystem\MonoGame.Link.ScreenSystem.csproj", "{D0769D58-69A6-4577-96E4-52B437C5DDD9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "Sample\Sample.csproj", "{3E485B13-20F4-482D-B3AD-D122103A91EB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame.Link.DebugSystem.Shared", "MonoGame.Link.DebugSystem.Shared\MonoGame.Link.DebugSystem.Shared.shproj", "{51C3EE3D-A8BD-4C2A-993B-BB933C91EEA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Link.DebugSystem", "MonoGame.Link.DebugSystem\MonoGame.Link.DebugSystem.csproj", "{CDD16EED-E3F6-47AE-ADD0-8FC39A9BFA05}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MonoGame.Link.ScreenSystem.Shared\MonoGame.Link.ScreenSystem.Shared.projitems*{418433d3-5f4d-4a91-8693-6125a3299197}*SharedItemsImports = 13
+		MonoGame.Link.Common.Shared\MonoGame.Link.Common.Shared.projitems*{46536216-375f-4a33-8f0d-efc9c0b79cb1}*SharedItemsImports = 5
+		MonoGame.Link.DebugSystem.Shared\MonoGame.Link.DebugSystem.Shared.projitems*{46536216-375f-4a33-8f0d-efc9c0b79cb1}*SharedItemsImports = 5
+		MonoGame.Link.EntitySystem.Shared\MonoGame.Link.EntitySystem.Shared.projitems*{46536216-375f-4a33-8f0d-efc9c0b79cb1}*SharedItemsImports = 5
+		MonoGame.Link.InputSystem.Shared\MonoGame.Link.InputSystem.Shared.projitems*{46536216-375f-4a33-8f0d-efc9c0b79cb1}*SharedItemsImports = 5
+		MonoGame.Link.ScreenSystem.Shared\MonoGame.Link.ScreenSystem.Shared.projitems*{46536216-375f-4a33-8f0d-efc9c0b79cb1}*SharedItemsImports = 5
+		MonoGame.Link.DebugSystem.Shared\MonoGame.Link.DebugSystem.Shared.projitems*{51c3ee3d-a8bd-4c2a-993b-bb933c91eea8}*SharedItemsImports = 13
+		MonoGame.Link.EntitySystem.Shared\MonoGame.Link.EntitySystem.Shared.projitems*{5f2ae03d-b151-4a21-b551-f97616e9a7df}*SharedItemsImports = 5
+		MonoGame.Link.InputSystem.Shared\MonoGame.Link.InputSystem.Shared.projitems*{70a6f4e4-a9b2-458a-b750-766717edcdca}*SharedItemsImports = 5
+		MonoGame.Link.InputSystem.Shared\MonoGame.Link.InputSystem.Shared.projitems*{887d5a4c-4890-4ba0-ada7-12cf9366279d}*SharedItemsImports = 13
+		MonoGame.Link.EntitySystem.Shared\MonoGame.Link.EntitySystem.Shared.projitems*{91df435b-940c-4c90-b2f7-58f4c772b4d4}*SharedItemsImports = 13
+		MonoGame.Link.Common.Shared\MonoGame.Link.Common.Shared.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		MonoGame.Link.Common.Shared\MonoGame.Link.Common.Shared.projitems*{c68e7692-06f1-49d6-81e2-6cc9b1c565c7}*SharedItemsImports = 5
+		MonoGame.Link.Common.Shared\MonoGame.Link.Common.Shared.projitems*{cdd16eed-e3f6-47ae-add0-8fc39a9bfa05}*SharedItemsImports = 5
+		MonoGame.Link.DebugSystem.Shared\MonoGame.Link.DebugSystem.Shared.projitems*{cdd16eed-e3f6-47ae-add0-8fc39a9bfa05}*SharedItemsImports = 5
+		MonoGame.Link.ScreenSystem.Shared\MonoGame.Link.ScreenSystem.Shared.projitems*{d0769d58-69a6-4577-96e4-52b437c5ddd9}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46536216-375F-4A33-8F0D-EFC9C0B79CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46536216-375F-4A33-8F0D-EFC9C0B79CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46536216-375F-4A33-8F0D-EFC9C0B79CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46536216-375F-4A33-8F0D-EFC9C0B79CB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C68E7692-06F1-49D6-81E2-6CC9B1C565C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C68E7692-06F1-49D6-81E2-6CC9B1C565C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C68E7692-06F1-49D6-81E2-6CC9B1C565C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C68E7692-06F1-49D6-81E2-6CC9B1C565C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F2AE03D-B151-4A21-B551-F97616E9A7DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2AE03D-B151-4A21-B551-F97616E9A7DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2AE03D-B151-4A21-B551-F97616E9A7DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2AE03D-B151-4A21-B551-F97616E9A7DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A6F4E4-A9B2-458A-B750-766717EDCDCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A6F4E4-A9B2-458A-B750-766717EDCDCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A6F4E4-A9B2-458A-B750-766717EDCDCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A6F4E4-A9B2-458A-B750-766717EDCDCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0769D58-69A6-4577-96E4-52B437C5DDD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0769D58-69A6-4577-96E4-52B437C5DDD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0769D58-69A6-4577-96E4-52B437C5DDD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0769D58-69A6-4577-96E4-52B437C5DDD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E485B13-20F4-482D-B3AD-D122103A91EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E485B13-20F4-482D-B3AD-D122103A91EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E485B13-20F4-482D-B3AD-D122103A91EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E485B13-20F4-482D-B3AD-D122103A91EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDD16EED-E3F6-47AE-ADD0-8FC39A9BFA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDD16EED-E3F6-47AE-ADD0-8FC39A9BFA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDD16EED-E3F6-47AE-ADD0-8FC39A9BFA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDD16EED-E3F6-47AE-ADD0-8FC39A9BFA05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C68E7692-06F1-49D6-81E2-6CC9B1C565C7} = {DE9F4DD4-0B20-47AE-A622-176A441971E9}
+		{A0CDBD0E-3A41-42B7-9425-A838BC2C7383} = {CFC98419-D71A-402B-9174-364D957F1E79}
+		{91DF435B-940C-4C90-B2F7-58F4C772B4D4} = {CFC98419-D71A-402B-9174-364D957F1E79}
+		{5F2AE03D-B151-4A21-B551-F97616E9A7DF} = {DE9F4DD4-0B20-47AE-A622-176A441971E9}
+		{887D5A4C-4890-4BA0-ADA7-12CF9366279D} = {CFC98419-D71A-402B-9174-364D957F1E79}
+		{70A6F4E4-A9B2-458A-B750-766717EDCDCA} = {DE9F4DD4-0B20-47AE-A622-176A441971E9}
+		{418433D3-5F4D-4A91-8693-6125A3299197} = {CFC98419-D71A-402B-9174-364D957F1E79}
+		{D0769D58-69A6-4577-96E4-52B437C5DDD9} = {DE9F4DD4-0B20-47AE-A622-176A441971E9}
+		{51C3EE3D-A8BD-4C2A-993B-BB933C91EEA8} = {CFC98419-D71A-402B-9174-364D957F1E79}
+		{CDD16EED-E3F6-47AE-ADD0-8FC39A9BFA05} = {DE9F4DD4-0B20-47AE-A622-176A441971E9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72B78C6E-A8D9-4A17-BBA3-5E23DF2C6252}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\bin\Debug\netstandard2.0\MonoGame.Link.EntitySystem.deps.json
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\bin\Debug\netstandard2.0\MonoGame.Link.EntitySystem.dll
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\bin\Debug\netstandard2.0\MonoGame.Link.EntitySystem.pdb
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\bin\Debug\netstandard2.0\MonoGame.Link.Common.dll
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\bin\Debug\netstandard2.0\MonoGame.Link.Common.pdb
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.csprojAssemblyReference.cache
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.AssemblyInfoInputs.cache
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.AssemblyInfo.cs
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.csproj.CoreCompileInputs.cache
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.csproj.CopyComplete
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.dll
+C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.EntitySystem\obj\Debug\netstandard2.0\MonoGame.Link.EntitySystem.pdb
