@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1C139B44-3161-49AE-9CE3-B3A77B3FCF32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game1", "Game1\Game1.csproj", "{BF4AE8DA-F7D7-4886-B4A9-D696C7DDB47F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Shared", "MonoLink.Shared\MonoLink.Shared.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Input.Shared", "MonoLink.Input.Shared\MonoLink.Input.Shared.shproj", "{77131E2B-991A-42AA-9D2F-C48478910DF3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Entity.Shared", "MonoLink.Entity.Shared\MonoLink.Entity.Shared.shproj", "{8861A382-6C61-43A9-B62D-67E0EB4AACE3}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{77131e2b-991a-42aa-9d2f-c48478910df3}*SharedItemsImports = 13
+		MonoLink.Entity.Shared\MonoLink.Entity.Shared.projitems*{8861a382-6c61-43a9-b62d-67e0eb4aace3}*SharedItemsImports = 13
+		MonoLink.Shared\MonoLink.Shared.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		MonoLink.Entity.Shared\MonoLink.Entity.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
+		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
+		MonoLink.Shared\MonoLink.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF4AE8DA-F7D7-4886-B4A9-D696C7DDB47F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF4AE8DA-F7D7-4886-B4A9-D696C7DDB47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF4AE8DA-F7D7-4886-B4A9-D696C7DDB47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF4AE8DA-F7D7-4886-B4A9-D696C7DDB47F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A0CDBD0E-3A41-42B7-9425-A838BC2C7383} = {1C139B44-3161-49AE-9CE3-B3A77B3FCF32}
+		{77131E2B-991A-42AA-9D2F-C48478910DF3} = {1C139B44-3161-49AE-9CE3-B3A77B3FCF32}
+		{8861A382-6C61-43A9-B62D-67E0EB4AACE3} = {1C139B44-3161-49AE-9CE3-B3A77B3FCF32}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0169724E-9B32-42F2-8B75-406B2758A971}
+	EndGlobalSection
+EndGlobal

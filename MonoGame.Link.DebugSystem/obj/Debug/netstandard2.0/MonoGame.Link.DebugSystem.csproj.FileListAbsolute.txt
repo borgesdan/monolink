@@ -1,9 +1,0 @@
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\bin\Debug\netstandard2.0\MonoGame.Link.DebugSystem.deps.json
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\bin\Debug\netstandard2.0\MonoGame.Link.DebugSystem.dll
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\bin\Debug\netstandard2.0\MonoGame.Link.DebugSystem.pdb
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\obj\Debug\netstandard2.0\MonoGame.Link.DebugSystem.csprojAssemblyReference.cache
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\obj\Debug\netstandard2.0\MonoGame.Link.DebugSystem.AssemblyInfoInputs.cache
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\obj\Debug\netstandard2.0\MonoGame.Link.DebugSystem.AssemblyInfo.cs
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\obj\Debug\netstandard2.0\MonoGame.Link.DebugSystem.csproj.CoreCompileInputs.cache
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\obj\Debug\netstandard2.0\MonoGame.Link.DebugSystem.dll
-C:\Users\borge\source\repos\MonoGame.Link\MonoGame.Link.DebugSystem\obj\Debug\netstandard2.0\MonoGame.Link.DebugSystem.pdb

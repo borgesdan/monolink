@@ -1,5 +1,4 @@
-#Pasta do visual studio
+#Pastas
 .vs/
-
-#Pasta de exemplo
-sample/
+game1/
+librarys/
