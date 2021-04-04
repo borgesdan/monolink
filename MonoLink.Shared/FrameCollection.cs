@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MonoLink
 {
     /// <summary>
-    /// Representa o encapsulamento de objetos HitFrames em relação a um TextureFrame.
+    /// Representa o encapsulamento de objetos HitFrames em relação a um SpriteFrame.
     /// </summary>
     public class FrameCollection
     {
@@ -18,19 +18,12 @@ namespace MonoLink
         /// </summary>
         public List<HitFrame> HitFrames { get; set; } = new List<HitFrame>();
 
-        //------------- CONSTRUCTOR ---------------//
+        //------------- CONSTRUCTOR ---------------//        
 
         /// <summary>
         /// Inicializa uma nova instância da classe.
         /// </summary>
-        public FrameCollection()
-        {
-        }
-
-        /// <summary>
-        /// Inicializa uma nova instância da classe.
-        /// </summary>
-        /// <param name="frame">Define o TextureFrame de referência.</param>        
+        /// <param name="frame">Define o SpriteFrame de referência.</param>        
         /// <param name="name">Define o nome da coleção.</param>        
         public FrameCollection(SpriteFrame frame, params HitFrame[] hitFrames)
         {
@@ -52,17 +45,7 @@ namespace MonoLink
             this.HitFrames.AddRange(source.HitFrames);
         }
 
-        //------------- METHODS ---------------//
-
-        /// <summary>
-        /// Define o TextureFrame de referência.
-        /// </summary>
-        /// <param name="spriteFrame">O objeto TextureFrame a ser utilizado.</param>
-        public FrameCollection Set(SpriteFrame spriteFrame)
-        {
-            Frame = spriteFrame;
-            return this;
-        }      
+        //------------- METHODS ---------------//        
         
         /// <summary>
         /// Adiciona um novo HitFrame.

@@ -8,29 +8,19 @@ namespace MonoLink
     /// <summary>
     /// Classe que implementa a função de uma animação 2D avançada.
     /// </summary>
-    public class AdvancedAnimation : IUpdateDraw
+    public class AdvancedAnimation : Animation2D
     {
         //------------- VARIABLES ----------------//
 
-        int time = 0;
         int textureIndex = 0;
         int frameIndex = 0;
         int elapsedGameTime = 0;
+        int elapsedAnimationTime = 0;
 
-        //------------- PROPERTIES ---------------//        
-        
-        /// <summary>Obtém ou define se a animação está apta a ser atualizada.</summary>
-        public bool IsEnabled { get; set; } = true;
-        /// <summary>Obtém ou define se a animação está apta a ser desenhada.</summary>
-        public bool IsVisible { get; set; } = true;
-        /// <summary>Obtém ou define um nome para a animação.</summary>
-        public string Name { get; set; } = "";
+        //------------- PROPERTIES ---------------//
 
         /// <summary>Obtém ou define a lista de sprites.</summary>
         public List<SpriteSheet> Sprites { get; set; } = new List<SpriteSheet>();
-
-        /// <summary>Obtém ou define em milisegundos o tempo de exibição de cada imagem.</summary>
-        public int Time { get => time; set => time = Math.Abs(value); }
 
         /// <summary>Obtém o index na lista Textures da textura ativa.</summary>
         public int CurrentTextureIndex
@@ -61,7 +51,7 @@ namespace MonoLink
             {
                 if (CurrentTexture != null)
                 {
-                    List<SpriteFrame> frames = Sprites[textureIndex].GetTextureFrames();
+                    List<SpriteFrame> frames = Sprites[textureIndex].GetSpriteFrames();
                     return frames[frameIndex];
                 }
                 else
@@ -111,7 +101,7 @@ namespace MonoLink
         }
 
         /// <summary>Obtém o tempo total da animação.</summary>
-        public TimeSpan TotalTime
+        public override TimeSpan TotalTime
         {
             get
             {
@@ -119,7 +109,7 @@ namespace MonoLink
 
                 foreach (SpriteSheet it in Sprites)
                 {
-                    frames += it.GetTextureFrames().Count;
+                    frames += it.GetSpriteFrames().Count;
                 }
 
                 int m = Time * frames;
@@ -127,55 +117,31 @@ namespace MonoLink
             }
         }
 
-        /// <summary>Obtém o tempo que já se passou da animação.</summary>
-        public TimeSpan ElapsedTime
-        {
-            get
-            {
-                int count = 0;
+        public override TimeSpan ElapsedTime => new TimeSpan(0, 0, 0, 0, elapsedAnimationTime);
 
-                for (int i = 0; i <= CurrentTextureIndex; i++)
-                {
-                    var frames = Sprites[i].GetTextureFrames();
-                    for (int f = 0; f <= frames.Count - 1; f++)
-                    {
-                        if (i == CurrentTextureIndex && f > CurrentFrameIndex)
-                            break;
+        ///// <summary>Obtém o tempo que já se passou da animação.</summary>
+        //public override TimeSpan ElapsedTime
+        //{
+        //    get
+        //    {
+        //        int count = 0;
 
-                        count++;
-                    }
-                }
+        //        for (int i = 0; i <= CurrentTextureIndex; i++)
+        //        {
+        //            var frames = Sprites[i].GetTextureFrames();
+        //            for (int f = 0; f <= frames.Count - 1; f++)
+        //            {
+        //                if (i == CurrentTextureIndex && f > CurrentFrameIndex)
+        //                    break;
 
-                var m = Time * count;
-                return new TimeSpan(0, 0, 0, 0, m);
-            }
-        }
-        /// <summary>Retorna True se a animação chegou ao fim.</summary>
-        public bool IsFinished
-        {
-            get
-            {
-                if (ElapsedTime >= TotalTime)
-                    return true;
-                else
-                    return false;
-            }
-        }
+        //                count++;
+        //            }
+        //        }
 
-        /// <summary>Obtém ou define a posição.</summary>
-        public Vector2 Position { get; set; } = Vector2.Zero;
-        /// <summary>Obtém ou define a escala.</summary>
-        public Vector2 Scale { get; set; } = Vector2.One;
-        /// <summary>Obtém ou define a rotação.</summary>
-        public float Rotation { get; set; } = 0;
-        /// <summary>Obtém ou define a cor da textura a ser desenhada.</summary>
-        public Color Color { get; set; } = Color.White;
-        /// <summary>Obtém ou define a origem do desenho e da rotação.</summary>
-        public Vector2 Origin { get; set; } = Vector2.Zero;
-        /// <summary>Obtém ou define o LayerDepth no desenho do componente, de 0f a 1f, se necessário.</summary>
-        public float LayerDepth { get; set; } = 0;
-        /// <summary>Obtém ou define os efeitos de espelhamento.</summary>
-        public SpriteEffects Effects { get; set; } = SpriteEffects.None;
+        //        var m = Time * count;
+        //        return new TimeSpan(0, 0, 0, 0, m);
+        //    }
+        //}
 
         //------------- EVENTS ---------------//
 
@@ -192,11 +158,8 @@ namespace MonoLink
         /// <param name="time">O tempo em milisegundos de cada quadro da animação.</param>
         /// <param name="items">Define os items da animação.</param>
         /// <param name="name">Um nome para a animação.</param>
-        public AdvancedAnimation(int time = 150, string name = "", params SpriteSheet[] items)
+        public AdvancedAnimation(int time = 150, string name = "", params SpriteSheet[] items) : base(time, name)
         {
-            Time = time;
-            Name = name;
-
             if (items != null)
             {
                 Sprites.AddRange(items);
@@ -205,10 +168,8 @@ namespace MonoLink
 
         /// <summary>Inicializa uma nova instância da classe com um construtor de cópia.</summary>
         /// <param name="source">A animação a ser copiada.</param>
-        public AdvancedAnimation(AdvancedAnimation source)
+        public AdvancedAnimation(AdvancedAnimation source) : base(source)
         {
-            this.IsVisible = source.IsVisible;
-            this.IsEnabled = source.IsEnabled;
             this.elapsedGameTime = source.elapsedGameTime;
             this.CurrentTextureIndex = source.CurrentTextureIndex;
             this.CurrentFrameIndex = source.CurrentFrameIndex;
@@ -219,27 +180,79 @@ namespace MonoLink
             }
 
             this.CurrentTexture = this.Sprites[CurrentTextureIndex].Texture;
-            this.Time = source.Time;
         }
 
         //------------- METHODS ---------------//
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (IsEnabled)
             {
-                //Atualiza a animação.
-                Animate(gameTime);
+                IsFinished = false;
+
+                //Verifica se existem texturas.
+                if (Sprites.Count > 0 && Time > 0)
+                {
+                    if (CurrentTexture == null)
+                        CurrentTexture = Sprites[0].Texture;
+
+                    int framesCount = Sprites[CurrentTextureIndex].GetSpriteFrames().Count;
+                    
+                    //Não continua caso não tenha frames a serem processados.
+                    if (framesCount <= 0)
+                        return;
+
+                    //Tempo total da animação
+                    elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
+                    //Tempo que já se passou desde a última troca de textura.
+                    elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
+
+                    if (elapsedGameTime > Time)
+                    {
+                        //Verifica se o index do frame atual, é maior que a quantidade de frames da textura ativa.
+                        if (CurrentFrameIndex >= framesCount - 1)
+                        {
+                            //Se sim, é hora de pular de sprite ou voltar para o primeiro frame,
+                            //Caso só tenhamos uma sprite
+                            if (CurrentTextureIndex >= Sprites.Count - 1)
+                            {
+                                CurrentTextureIndex = 0;
+                                IsFinished = true;
+                                elapsedAnimationTime = 0;
+                            }
+                            else
+                            {
+                                CurrentTextureIndex++;
+                            }
+
+                            CurrentFrameIndex = 0;
+                        }
+                        else
+                        {
+                            CurrentFrameIndex++;
+                        }
+
+                        //Reseta o tempo.
+                        elapsedGameTime = 0;
+                        //Atualiza o sprite atual.
+                        CurrentTexture = Sprites[CurrentTextureIndex].Texture;
+                    }
+                }
+
+                if (IsFinished)
+                {
+                    OnEndAnimation?.Invoke(this);
+                }
             }
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (IsVisible)
             {
                 if (CurrentTexture != null)
                 {
-                    Vector2 finalOrigin = Origin + Sprites[CurrentTextureIndex].GetTextureFrames()[CurrentFrameIndex].Align;
+                    Vector2 finalOrigin = Origin + Sprites[CurrentTextureIndex].GetSpriteFrames()[CurrentFrameIndex].Align;
 
                     spriteBatch.Draw(
                        texture: CurrentTexture,
@@ -254,60 +267,6 @@ namespace MonoLink
                        layerDepth: LayerDepth
                        );
                 }
-            }
-        }        
-        
-        private void Animate(GameTime gameTime)
-        {
-            //Verifica se existem texturas.
-            if (Sprites.Count > 0)
-            {
-                if (CurrentTexture == null)
-                    CurrentTexture = Sprites[0].Texture;
-
-                int framesCount = Sprites[CurrentTextureIndex].GetTextureFrames().Count;
-
-                //Não continua se o tempo for igual a zero.
-                //Não continua caso não tenha frames a serem processados.
-                if (Time == 0 || framesCount <= 0)
-                    return;
-
-                //Tempo que já se passou desde a última troca de textura.
-                elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
-
-                if (elapsedGameTime > Time)
-                {
-                    //Verifica se o index do frame atual, é maior que a quantidade de frames da textura ativa.
-                    if (CurrentFrameIndex >= framesCount - 1)
-                    {
-                        //Se sim, é hora de pular de sprite ou voltar para o primeiro frame,
-                        //Caso só tenhamos uma sprite
-                        if (CurrentTextureIndex >= Sprites.Count - 1)
-                        {
-                            CurrentTextureIndex = 0;
-                        }
-                        else
-                        {
-                            CurrentTextureIndex++;
-                        }
-
-                        CurrentFrameIndex = 0;
-                    }
-                    else
-                    {
-                        CurrentFrameIndex++;
-                    }
-
-                    //Reseta o tempo.
-                    elapsedGameTime = 0;
-                    //Atualiza o sprite atual.
-                    CurrentTexture = Sprites[CurrentTextureIndex].Texture;
-                }
-            }
-
-            if (IsFinished)
-            {
-                OnEndAnimation?.Invoke(this);
             }
         }
 
@@ -327,15 +286,16 @@ namespace MonoLink
         {
             CurrentFrameIndex++;
 
-            if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].GetTextureFrames().Count - 1)
+            if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].GetSpriteFrames().Count - 1)
                 CurrentFrameIndex = 0;
         }
 
         /// <summary>Define as propriedades CurrentTextureIndex e CurrentFrameIndex com o valor 0.</summary>
-        public void Reset()
+        public override void Reset()
         {
             CurrentTextureIndex = 0;
             CurrentFrameIndex = 0;
+            elapsedAnimationTime = 0;
             elapsedGameTime = 0;
         }
 
@@ -368,7 +328,7 @@ namespace MonoLink
         /// <summary>
         /// Obtém os limites da animação.
         /// </summary>
-        public Rectangle GetBounds()
+        public override  Rectangle GetBounds()
         {
             if (CurrentTexture != null)
             {
@@ -382,7 +342,7 @@ namespace MonoLink
                 //float ox = Origin.X;
                 //float oy = Origin.Y;
 
-                Vector2 frameOrigin = Sprites[CurrentTextureIndex].GetTextureFrames()[CurrentFrameIndex].Align;
+                Vector2 frameOrigin = Sprites[CurrentTextureIndex].GetSpriteFrames()[CurrentFrameIndex].Align;
 
                 ////Obtém uma matrix: -origin * escala * posição (excluíndo a rotação)
                 //Matrix m = Matrix.CreateTranslation(-ox + -frameOrigin.X, -oy + -frameOrigin.Y, 0)

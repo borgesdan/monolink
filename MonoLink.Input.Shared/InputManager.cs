@@ -7,7 +7,7 @@ namespace MonoLink.Input
     /// </summary>
     public class InputManager : IUpdate
     {
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; } = true;
 
         /// <summary>Obtém ou define o GamePad do Player 1.</summary>
         public GamePadHelper One { get; set; }

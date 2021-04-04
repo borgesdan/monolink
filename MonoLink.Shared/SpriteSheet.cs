@@ -23,11 +23,6 @@ namespace MonoLink
         /// Obtém true caso a lista de Frames não esteja vazia.
         /// </summary>
         public bool HasFrames { get => Frames.Count > 0; }
-        
-        /// <summary>
-        /// Inicializa uma nova instância da classe.
-        /// </summary>
-        public SpriteSheet() { }        
 
         /// <summary>
         /// Inicializa uma nova instância da classe.
@@ -56,16 +51,7 @@ namespace MonoLink
             }
         }
 
-        //------------- METHODS ---------------//
-
-        /// <summary>
-        /// Define a textura a ser utilizada.
-        /// </summary>        
-        public SpriteSheet Set(Texture2D texture)
-        {
-            Texture = texture;
-            return this;
-        }
+        //------------- METHODS ---------------//        
         
         /// <summary>
         /// Adiciona uma coleção de frames
@@ -88,9 +74,9 @@ namespace MonoLink
         }
 
         /// <summary>
-        /// Obtém uma lista com todos os TexturesFrames da textutra.
+        /// Obtém uma lista com todos os SpriteFrames da textutra.
         /// </summary>        
-        public List<SpriteFrame> GetTextureFrames()
+        public List<SpriteFrame> GetSpriteFrames()
         {
             List<SpriteFrame> f = new List<SpriteFrame>();
 

@@ -69,10 +69,11 @@ namespace MonoLink
         {
             if (IsEnabled)
             {
+                IsFinished = false;
+
                 //Verifica se existem texturas.
                 if (Texture != null && Frames.Count > 0 && Time > 0)
-                {
-                    IsFinished = false;
+                {                    
                     //Tempo total da animação
                     elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
                     //Tempo para calcular as trocas da textura.
