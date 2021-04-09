@@ -61,6 +61,15 @@ namespace MonoLink
             this.IsVisible = source.IsVisible;
             this.IsEnabled = source.IsEnabled;            
             this.Time = source.Time;
+            this.Position = source.Position;
+            this.Color = source.Color;
+            this.Effects = source.Effects;
+            this.IsFinished = source.IsFinished;
+            this.LayerDepth = source.LayerDepth;
+            this.Name = source.Name;
+            this.Origin = source.Origin;
+            this.Rotation = source.Rotation;
+            this.Scale = source.Scale;            
         }
 
         /// <summary>

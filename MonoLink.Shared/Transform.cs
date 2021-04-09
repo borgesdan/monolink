@@ -252,6 +252,24 @@ namespace MonoLink
         }
 
         /// <summary>
+        /// Obtém uma instância da classe Transform2D.
+        /// </summary>
+        public static Transform2D Create2()
+        {
+            Transform t = new Transform();
+            return new Transform2D(t);
+        }
+
+        /// <summary>
+        /// Obtém uma instância da classe Transform2D.
+        /// </summary>
+        public static Transform3D Create3()
+        {
+            Transform t = new Transform();
+            return new Transform3D(t);
+        }
+
+        /// <summary>
         /// Aplica os cálculos de transformações.
         /// </summary>
         /// <param name="gameTime">O tempo decorrido de jogo.</param>

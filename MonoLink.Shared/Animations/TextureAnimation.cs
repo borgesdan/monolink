@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace MonoLink
 {
@@ -13,8 +14,11 @@ namespace MonoLink
     {
         private int elapsedAnimationTime = 0;
         private int elapsedGameTime = 0;
-        readonly Texture2D[] textures = null;
-
+        
+        /// <summary>
+        /// Obtém as texturas da animação.
+        /// </summary>
+        public List<Texture2D> Textures { get; private set; } = new List<Texture2D>();
         /// <summary>
         /// Obtém o index da textura atual.
         /// </summary>
@@ -22,9 +26,9 @@ namespace MonoLink
         /// <summary>
         /// Obtém a textura atual.
         /// </summary>
-        public Texture2D CurrentTexture => textures.Length > 0 ? textures[CurrentIndex] : null;
+        public Texture2D CurrentTexture => Textures.Count > 0 ? Textures[CurrentIndex] : null;
 
-        public override TimeSpan TotalTime => new TimeSpan(0, 0, 0, 0, Time * textures.Length);
+        public override TimeSpan TotalTime => new TimeSpan(0, 0, 0, 0, Time * Textures.Count);
         public override TimeSpan ElapsedTime => new TimeSpan(0, 0, 0, 0, elapsedAnimationTime);
 
         /// <summary>
@@ -37,11 +41,11 @@ namespace MonoLink
             this.elapsedGameTime = source.elapsedGameTime;
             this.CurrentIndex = source.CurrentIndex;
 
-            textures = new Texture2D[source.textures.Length];
+            Textures = new List<Texture2D>();
 
-            for(int i = 0; i < source.textures.Length; i++)
+            for(int i = 0; i < source.Textures.Count; i++)
             {
-                textures[i] = source.textures[i];
+                Textures.Add(source.Textures[i]);
             }
         }
 
@@ -53,7 +57,18 @@ namespace MonoLink
         /// <param name="textures">A lista de texturas a ser usada na animação.</param>
         public TextureAnimation(int time, string name, Texture2D[] textures) : base(time, name)
         {
-            this.textures = textures;
+            this.Textures = new List<Texture2D>(textures);
+        }
+
+        /// <summary>
+        /// Inicializa uma nova instância da classe.
+        /// </summary>
+        /// <param name="time">O tempo de exibição de cada textura.</param>
+        /// <param name="name">O nome da animação.</param>
+        /// <param name="textures">A lista de texturas a ser usada na animação.</param>
+        public TextureAnimation(int time, string name, List<Texture2D> textures) : base(time, name)
+        {
+            this.Textures = textures;
         }
 
         public override void Update(GameTime gameTime)
@@ -63,7 +78,7 @@ namespace MonoLink
                 IsFinished = false;
 
                 //Verifica se existem texturas.
-                if (textures.Length > 0 && Time > 0)
+                if (Textures.Count > 0 && Time > 0)
                 {                    
                     //Tempo total da animação
                     elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
@@ -80,7 +95,7 @@ namespace MonoLink
 
                         //Reseta tudo caso o index seja maior do que a quantidade de texturas
                         //E seta a propriedade IsFinished como true.
-                        if (CurrentIndex > textures.Length - 1)
+                        if (CurrentIndex > Textures.Count - 1)
                         {
                             elapsedAnimationTime = 0;
                             CurrentIndex = 0;
@@ -123,14 +138,6 @@ namespace MonoLink
         {
             Transform transform = new Transform(Position, Vector2.Zero, Scale, Rotation);
             return GameHelper.GetBounds(transform, CurrentTexture.Width, CurrentTexture.Height, Origin);
-        }
-
-        /// <summary>
-        /// Obtém as texturas adicionadas à animação.
-        /// </summary>
-        public Texture2D[] GetTextures()
-        {            
-            return (Texture2D[])textures.Clone();
         }
     }
 }
