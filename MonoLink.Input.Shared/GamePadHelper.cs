@@ -88,7 +88,7 @@ namespace MonoLink.Input
 
         /// <summary>Verifica se o botão selecionado está pressionado.</summary>
         /// <param name="button">O botão do GamePad a ser verificado.</param>
-        public bool Down(Buttons button)
+        public bool IsDown(Buttons button)
         {
             if(State.IsConnected)
             {
@@ -102,7 +102,7 @@ namespace MonoLink.Input
 
         /// <summary>Verifica se o botão selecionado estava liberado e foi pressionado.</summary>
         /// <param name="button">O botão do GamePad a ser verificado.</param>
-        public bool Pressed(Buttons button)
+        public bool IsJustPressed(Buttons button)
         {
             if (State.IsConnected)
             {
@@ -116,7 +116,7 @@ namespace MonoLink.Input
 
         /// <summary>Verifica se o botão estava pressionada e foi liberada.</summary>
         /// <param name="key">A tecla a ser verificada.</param>
-        public bool Released(Buttons button)
+        public bool IsJustReleased(Buttons button)
         {
             if (State.IsConnected)
             {
@@ -130,7 +130,7 @@ namespace MonoLink.Input
 
         /// <summary>Verifica se o botão selecionado está liberado.</summary>     
         /// <param name="button">O botão do GamePad a ser verificado.</param>
-        public bool Up(Buttons button)
+        public bool IsUp(Buttons button)
         {
             if (State.IsConnected)
             {

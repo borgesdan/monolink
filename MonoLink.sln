@@ -21,14 +21,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Camera.Shared", "M
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Screen.Shared", "MonoLink.Screen.Shared\MonoLink.Screen.Shared.shproj", "{84E725E1-0BDC-44DC-85E7-2C2C0825A635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoLink", "Librarys\MonoLink\MonoLink.csproj", "{D9674F45-B3D1-4297-AB92-0595909B322B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoLink", "Librarys\MonoLink\MonoLink.csproj", "{D9674F45-B3D1-4297-AB92-0595909B322B}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MonoLink.Camera.Shared\MonoLink.Camera.Shared.projitems*{5ae67349-a052-4e24-b7c1-8578d3120249}*SharedItemsImports = 13
 		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{77131e2b-991a-42aa-9d2f-c48478910df3}*SharedItemsImports = 13
 		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{7e5374d2-76bd-49da-b1cb-bcc1422cf6b7}*SharedItemsImports = 5
-		MonoLink.Shared\MonoLink.Shared.projitems*{7e5374d2-76bd-49da-b1cb-bcc1422cf6b7}*SharedItemsImports = 5
 		MonoLink.Screen.Shared\MonoLink.Screen.Shared.projitems*{84e725e1-0bdc-44dc-85e7-2c2c0825a635}*SharedItemsImports = 13
 		MonoLink.Entity.Shared\MonoLink.Entity.Shared.projitems*{8861a382-6c61-43a9-b62d-67e0eb4aace3}*SharedItemsImports = 13
 		MonoLink.Shared\MonoLink.Shared.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13

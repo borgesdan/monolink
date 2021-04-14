@@ -33,28 +33,28 @@ namespace MonoLink.Input
 
         /// <summary>Verifica se a tecla está pressionada.</summary>
         /// <param name="key">A tecla a ser verificada.</param>
-        public bool Down(Keys key)
+        public bool IsDown(Keys key)
         {
             return State.IsKeyDown(key);
         }
 
         /// <summary>Verifica se a tecla estava liberada e foi pressionada.</summary>
         /// <param name="key">A tecla a ser verificada.</param>
-        public bool Pressed(Keys key)
+        public bool IsJustPressed(Keys key)
         {
             return OldState.IsKeyUp(key) && State.IsKeyDown(key);
         }
 
         /// <summary>Verifica se a tecla estava pressionada e foi liberada.</summary>
         /// <param name="key">A tecla a ser verificada.</param>
-        public bool Released(Keys key)
+        public bool IsJustReleased(Keys key)
         {
             return OldState.IsKeyDown(key) && State.IsKeyUp(key);
         }
 
         /// <summary>Verifica se a tecla está liberada.</summary>   
         /// <param name="key">A tecla a ser verificada.</param>
-        public bool Up(Keys key)
+        public bool IsUp(Keys key)
         {
             return State.IsKeyUp(key);
         }

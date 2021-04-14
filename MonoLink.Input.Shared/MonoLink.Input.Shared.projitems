@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)InputManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyboardHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyButtonMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MouseEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MouseHelper.cs" />
   </ItemGroup>
 </Project>

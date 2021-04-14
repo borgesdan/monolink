@@ -28,6 +28,8 @@ namespace MonoLink.Input
         public MouseState State { get; private set; }
         /// <summary>Obtém estado anterior do mouse.</summary>
         public MouseState OldState { get; private set; }
+        /// <summary>Obtém os eventos do mouse.</summary>
+        public MouseEvents MouseEvents { get; private set; }
 
         //---------------------------------------//
         //-----         CONSTRUTOR          -----//
@@ -56,6 +58,8 @@ namespace MonoLink.Input
         {
             if (IsEnabled)
             {
+                MouseEvents.Update(gameTime);
+
                 OldState = State;
                 State = Mouse.GetState();
 
@@ -69,7 +73,7 @@ namespace MonoLink.Input
         {
             hasDoubleClick = false;
             clickTime += gameTime.ElapsedGameTime.Milliseconds;
-            bool pressed = Pressed(DoubleClickButton);     
+            bool pressed = IsJustPressed(DoubleClickButton);     
             
             if(clickTime <= DoubleClickDelay)
             {
@@ -97,21 +101,21 @@ namespace MonoLink.Input
 
         /// <summary>Checa se o botão do mouse está pressionado.</summary>
         /// <param name="button">O botão do mouse a ser checado.</param>
-        public bool Down(MouseButtons button)
+        public bool IsDown(MouseButtons button)
         {            
              return Check(button, false) == ButtonState.Pressed;
         }
 
         /// <summary>Checa se o botão do mouse está liberado.</summary>
         /// <param name="button">O botão do mouse a ser checado.</param>
-        public bool Up(MouseButtons button)
+        public bool IsUp(MouseButtons button)
         {            
             return Check(button, false) == ButtonState.Released;
         }
 
         /// <summary>Checa se o botão do mouse foi pressionado.</summary>
         /// <param name="button">O botão do mouse a ser checado.</param>
-        public bool Pressed(MouseButtons button)
+        public bool IsJustPressed(MouseButtons button)
         {            
             return Check(button, true) == ButtonState.Released 
                 && Check(button, false) == ButtonState.Pressed;
@@ -121,7 +125,7 @@ namespace MonoLink.Input
         /// Checa se o botão do mouse foi liberado.
         /// </summary>
         /// <param name="button">O botão do mouse a ser checado.</param>
-        public bool Released(MouseButtons button)
+        public bool IsJustReleased(MouseButtons button)
         {
             return Check(button, true) == ButtonState.Pressed
                 && Check(button, false) == ButtonState.Released;
