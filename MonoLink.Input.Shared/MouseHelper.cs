@@ -29,7 +29,7 @@ namespace MonoLink.Input
         /// <summary>Obtém estado anterior do mouse.</summary>
         public MouseState OldState { get; private set; }
         /// <summary>Obtém os eventos do mouse.</summary>
-        public MouseEvents MouseEvents { get; private set; }
+        public MouseEvents MouseEvents { get; private set; } = new MouseEvents();
 
         //---------------------------------------//
         //-----         CONSTRUTOR          -----//
