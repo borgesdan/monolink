@@ -23,6 +23,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Screen.Shared", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoLink", "Librarys\MonoLink\MonoLink.csproj", "{D9674F45-B3D1-4297-AB92-0595909B322B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Tiles.Shared", "MonoLink.Tiles.Shared\MonoLink.Tiles.Shared.shproj", "{F07A721A-B2F2-4DF3-A4D1-A21B1D48E630}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MonoLink.Camera.Shared\MonoLink.Camera.Shared.projitems*{5ae67349-a052-4e24-b7c1-8578d3120249}*SharedItemsImports = 13
@@ -36,7 +38,9 @@ Global
 		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
 		MonoLink.Screen.Shared\MonoLink.Screen.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
 		MonoLink.Shared\MonoLink.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
+		MonoLink.Tiles.Shared\MonoLink.Tiles.Shared.projitems*{bf4ae8da-f7d7-4886-b4a9-d696c7ddb47f}*SharedItemsImports = 5
 		MonoLink.Shared\MonoLink.Shared.projitems*{d9674f45-b3d1-4297-ab92-0595909b322b}*SharedItemsImports = 5
+		MonoLink.Tiles.Shared\MonoLink.Tiles.Shared.projitems*{f07a721a-b2f2-4df3-a4d1-a21b1d48e630}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,7 @@ Global
 		{5AE67349-A052-4E24-B7C1-8578D3120249} = {1C139B44-3161-49AE-9CE3-B3A77B3FCF32}
 		{84E725E1-0BDC-44DC-85E7-2C2C0825A635} = {1C139B44-3161-49AE-9CE3-B3A77B3FCF32}
 		{D9674F45-B3D1-4297-AB92-0595909B322B} = {8FD76822-8E49-4C92-BA6F-61734837ABE0}
+		{F07A721A-B2F2-4DF3-A4D1-A21B1D48E630} = {1C139B44-3161-49AE-9CE3-B3A77B3FCF32}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0169724E-9B32-42F2-8B75-406B2758A971}
