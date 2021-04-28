@@ -34,6 +34,13 @@ namespace MonoLink.Tiles
 
         protected override void OnUpdate(GameTime gameTime)
         {
+            Animation.Position = this.Position;
+            Animation.Color = this.Color;
+            Animation.Effects = this.Effects;
+            Animation.Origin = this.Origin;
+            Animation.Rotation = this.Rotation;
+            Animation.Scale = this.Scale;
+            
             Animation.Update(gameTime);
         }
 
