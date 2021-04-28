@@ -221,7 +221,7 @@ namespace MonoLink.Tiles
         /// </summary>
         /// <param name="row">A linha desejada.</param>
         /// <param name="column">A coluna desejada.</param>
-        public Rectangle GetTileBounds(int row, int column)
+        public override Rectangle GetTileBounds(int row, int column)
         {
             int index = TotalMap[row, column];
             TileInfo info = infoList.Find(i => i.MapPoint == new Point(row, column));

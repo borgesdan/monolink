@@ -66,6 +66,8 @@ namespace MonoLink.Tiles
         public int GetLength(int dimension)
         {
             return TotalMap.GetLength(dimension);
-        }        
+        }    
+        
+        public abstract Rectangle GetTileBounds(int row, int column);
     }
 }
