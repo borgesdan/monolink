@@ -27,7 +27,7 @@ namespace MonoLink.Tiles
         /// <summary>Obtém ou define o LayerDepth no desenho do componente, de 0f a 1f, se necessário.</summary>
         public float LayerDepth { get; set; } = 0;
         /// <summary>Obtém ou define os efeitos de espelhamento.</summary>
-        public SpriteEffects Effects { get; set; } = SpriteEffects.None;
+        public SpriteEffects Effects { get; set; } = SpriteEffects.None;        
 
         protected Tile(Game game)
         {
@@ -63,5 +63,7 @@ namespace MonoLink.Tiles
 
         protected virtual void OnUpdate(GameTime gameTime) { }
         protected virtual void OnDraw(GameTime gameTime, SpriteBatch spriteBatch) { }
+
+        public abstract Rectangle GetBounds();
     }
 }

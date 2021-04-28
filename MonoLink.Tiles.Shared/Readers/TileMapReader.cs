@@ -82,9 +82,17 @@ namespace MonoLink.Tiles
                             y = ((h / 2) * col) - ((h / 2) * -row) + sy;
                         }
 
+                        //Conserto da posição com relação a origem.
+                        x += Table[index].Origin.X;
+                        y += Table[index].Origin.Y;
+
+                        x *= Table[index].Scale.X;
+                        y *= Table[index].Scale.Y;
+
                         TileInfo info;
                         info.Position = new Vector2(x, y);
                         info.Index = index;
+                        info.MapPoint = new Point(row, col);
 
                         infoList.Add(info);
                     }
@@ -118,6 +126,22 @@ namespace MonoLink.Tiles
                 tile.Position = infoList[i].Position;
                 tile.Draw(gameTime, spriteBatch);
             }
+        }
+
+        /// <summary>
+        /// Obtém os limites do tile informando a linha e a coluna do mapa.
+        /// </summary>
+        /// <param name="row">A linha desejada.</param>
+        /// <param name="column">A coluna desejada.</param>        
+        public Rectangle GetTileBounds(int row, int column)
+        {
+            int index = TotalMap[row, column];
+            TileInfo info = infoList.Find(i => i.MapPoint == new Point(row, column));
+
+            T tile = Table[index];
+            tile.Position = info.Position;
+
+            return tile.GetBounds();
         }
     }
 }

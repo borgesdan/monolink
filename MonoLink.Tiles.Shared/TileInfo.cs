@@ -9,5 +9,6 @@ namespace MonoLink.Tiles
     {
         public Vector2 Position;
         public int Index;
+        public Point MapPoint;
     }
 }

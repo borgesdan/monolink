@@ -39,5 +39,13 @@ namespace MonoLink.Tiles
                 layerDepth: LayerDepth
                 );
         }
+
+        public override Rectangle GetBounds()
+        {
+            return GameHelper.GetBounds(new Transform(Position, Vector2.Zero, Scale, Rotation),
+                Frame.HasValue ? Frame.Value.Width : Texture.Width,
+                Frame.HasValue ? Frame.Value.Height : Texture.Height,
+                Origin);
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace MonoLink.Tiles
         {
             Animation.Draw(gameTime, spriteBatch);
         }
+
+        public override Rectangle GetBounds()
+        {
+            return Animation.GetBounds();
+        }
     }
 }
