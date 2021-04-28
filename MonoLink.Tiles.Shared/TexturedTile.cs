@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoLink;
 
 namespace MonoLink.Tiles
 {
-    public class TextureTile : Tile
+    public class TexturedTile : Tile
     {
         public Texture2D Texture { get; } = null;
         public Rectangle? Frame { get; set; } = null;
 
-        public TextureTile(Game game, Texture2D texture) : base(game)
+        public TexturedTile(Game game, Texture2D texture) : base(game)
         {
             Texture = texture;
         }
 
-        public TextureTile(Game game, Texture2D texture, Rectangle? frame) : base(game)
+        public TexturedTile(Game game, Texture2D texture, Rectangle? frame) : base(game)
         {
             Texture = texture;
             Frame = frame;
         }
 
-        public TextureTile(TextureTile source) : base(source)
+        public TexturedTile(TexturedTile source) : base(source)
         {
             this.Texture = source.Texture;
             this.Frame = source.Frame;

@@ -1,33 +1,34 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace MonoLink.Tiles
 {
-    /// <summary>
-    /// Representa um leitor de tiles com um mapa representado em um array bidimensional de inteiros.
-    /// </summary>
-    public abstract class MapReader<T> : ITileReader where T : Tile
+    public abstract class TileBuilder<T> : ITileBuilder where T : Tile
     {
         protected int[,] TotalMap = null;
 
         /// <summary>Obtém se o método Read() leu todo seu conteúdo e chegou ao fim.</summary>
-        public bool IsRead { get; protected set; } = false;
+        public bool IsBuilded { get; protected set; } = false;
         /// <summary>Obtém ou define a largura dos tiles para cálculos posteriores.</summary>
         public int TileWidth { get; protected set; } = 0;
         /// <summary>Obtém ou define a altura dos tiles para cálculos posteriores.</summary>
         public int TileHeight { get; protected set; } = 0;
         /// <summary>Obtém ou define a tabela de índices com seus respectivos Tiles.</summary>
-        public Dictionary<int, T> Table { get; set; } = new Dictionary<int, T>();
+        public Dictionary<int, T> Table { get; protected set; } = new Dictionary<int, T>();
+        /// <summary>Obtém a lista de tiles ordenados pelo método Read(). Point representa a linha e a coluna onde se encontra o Tile.</summary>
+        public Dictionary<Point, T> Tiles { get; protected set; } = new Dictionary<Point, T>();
 
-        protected MapReader(Dictionary<int, T> table, int tileWidth, int tileHeight)
+        protected TileBuilder(Dictionary<int, T> table, int tileWidth, int tileHeight)
         {
             TileWidth = tileWidth;
             TileHeight = tileHeight;
             Table = table;
         }
 
-        public abstract void Read();
+        public abstract void Build();
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
@@ -39,7 +40,7 @@ namespace MonoLink.Tiles
         public int GetValue(int row, int column)
         {
             return TotalMap[row, column];
-        }             
+        }
 
         /// <summary>
         /// Obtém o mapa.

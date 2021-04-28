@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MonoLink.Tiles
 {
-    public enum TileType
+    public enum TileStyle
     {
         Rectangle,
         Isometric

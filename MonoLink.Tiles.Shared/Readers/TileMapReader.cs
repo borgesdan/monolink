@@ -4,24 +4,44 @@ using System.Collections.Generic;
 
 namespace MonoLink.Tiles
 {
-    public class TileMapReader<T> : MapReader<T> where T : Tile
+    /// <summary>
+    /// Representa uma classe que desenha os tiles na tela através da leitura de um dicionário int-tile.
+    /// </summary>
+    /// <typeparam name="T">T é uma classe que herda de Tile.</typeparam>
+    public class TileMapReader<T> : TileReader<T> where T : Tile
     {
-        int[,] mapArray = null;
-        TileType tileType = TileType.Rectangle;
-        List<TileInfo> infoList = new List<TileInfo>();
+        readonly TileStyle tileType = TileStyle.Rectangle;
+        readonly List<TileInfo> infoList = new List<TileInfo>();
 
         /// <summary>Obtém ou define a posição inicial para o cálculo de ordenação dos tiles.</summary>
         public Vector2 StartPosition { get; set; } = Vector2.Zero;
 
         /// <summary>
-        /// Inicializa uma nova instância de MapReader.
+        /// Inicializa uma nova instância da classe.
         /// </summary>
+        /// <param name="map">Array de inteiros que representa o mapa de tiles.</param>
+        /// <param name="table">A tabela número-tile.</param>
+        /// <param name="type">O estilo do tile a ser desenhado na tela.</param>
         /// <param name="tileWidth">A largura dos tiles.</param>
         /// <param name="tileHeight">A altura dos tiles.</param>
-        public TileMapReader(int[,] map, Dictionary<int, T> table, TileType type, int tileWidth, int tileHeight) : base(table, tileWidth, tileHeight)
+        public TileMapReader(int[,] map, Dictionary<int, T> table, TileStyle type, int tileWidth, int tileHeight) : base(table, tileWidth, tileHeight)
         {
-            this.mapArray = map;
+            TotalMap = map;
             tileType = type;
+        }
+
+        /// <summary>
+        /// Inicializa uma nova instância da classe como cópia de outra instância.
+        /// </summary>
+        /// <param name="source">A instância a ser copiada.</param>
+        public TileMapReader(TileMapReader<T> source) : base(source)
+        {
+            this.tileType = source.tileType;
+
+            foreach (TileInfo i in source.infoList)
+                this.infoList.Add(i);
+
+            this.StartPosition = source.StartPosition;
         }
 
         /// <summary>
@@ -30,8 +50,6 @@ namespace MonoLink.Tiles
         public override void Read()
         {
             IsRead = false;
-
-            TotalMap = mapArray;
 
             //dimensões do array
             int d0 = TotalMap.GetLength(0);
@@ -53,10 +71,10 @@ namespace MonoLink.Tiles
 
                         float x, y;
 
-                        if (tileType == TileType.Rectangle)
+                        if (tileType == TileStyle.Rectangle)
                         {
-                            x = (w * row) + sx;
-                            y = (h * col) + sy;
+                            x = (w * col) + sx;
+                            y = (h * row) + sy;
                         }
                         else
                         {
@@ -76,17 +94,27 @@ namespace MonoLink.Tiles
             IsRead = true;
         }
 
+        /// <summary>
+        /// Atualiza todos os tiles contidos na propriedade Table.
+        /// </summary>
+        /// <param name="gameTime">Obtém acesso ao tempo de jogo.</param>
         public override void Update(GameTime gameTime)
         {
             foreach (var t in Table.Values)
                 t.Update(gameTime);            
         }
 
+        /// <summary>
+        /// Desenha os tiles na tela.
+        /// </summary>
+        /// <param name="gameTime">Obtém acesso ao tempo de jogo.</param>
+        /// <param name="spriteBatch">Obtém acesso ao SpriteBatch.</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             for(int i = 0; i < infoList.Count; i++)
             {
                 var tile = Table[infoList[i].Index];
+
                 tile.Position = infoList[i].Position;
                 tile.Draw(gameTime, spriteBatch);
             }

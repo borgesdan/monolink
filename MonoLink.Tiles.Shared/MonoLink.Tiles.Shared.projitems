@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Content\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Interfaces\" />
     <Folder Include="$(MSBuildThisFileDirectory)Readers\" />
   </ItemGroup>
   <ItemGroup>
@@ -18,14 +17,17 @@
     <None Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AnimatedTile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builder\TileMapBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITileBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITileReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Readers\MapReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TextureTile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Readers\TileReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TexturedTile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builder\TileBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TileInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Readers\TileMapReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TileSector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Readers\TileSectorReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TileType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TileStyle.cs" />
   </ItemGroup>
 </Project>
