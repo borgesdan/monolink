@@ -10,8 +10,13 @@ namespace MonoLink.Tiles
     /// <typeparam name="T">T é uma classe que herda de Tile.</typeparam>
     public class TileMapReader<T> : TileReader<T> where T : Tile
     {
+        //O estilo do tyle, se retângular ou isometrico
         readonly TileStyle tileType = TileStyle.Rectangle;
+        //Obtém as informações necessárias para o desenho de cada tile
         readonly List<TileInfo> infoList = new List<TileInfo>();
+        //Obtém o index do tileinfo na var infoList informando a linha e a coluna do mapa
+        //Útil para descobrir rapidamente qual tile o tileinfo referencia
+        readonly Dictionary<Point, int> infoIndexList = new Dictionary<Point, int>();
 
         /// <summary>Obtém ou define a posição inicial para o cálculo de ordenação dos tiles.</summary>
         public Vector2 StartPosition { get; set; } = Vector2.Zero;
@@ -92,9 +97,9 @@ namespace MonoLink.Tiles
                         TileInfo info;
                         info.Position = new Vector2(x, y);
                         info.Index = index;
-                        info.MapPoint = new Point(row, col);
 
                         infoList.Add(info);
+                        infoIndexList.Add(new Point(row, col), infoList.Count - 1);
                     }
                 }
             }
@@ -135,10 +140,12 @@ namespace MonoLink.Tiles
         /// <param name="column">A coluna desejada.</param>        
         public override Rectangle GetTileBounds(int row, int column)
         {
-            int index = TotalMap[row, column];
-            TileInfo info = infoList.Find(i => i.MapPoint == new Point(row, column));
+            int index = TotalMap[row, column];            
+            int infoIndex = infoIndexList[new Point(row, column)];            
 
             T tile = Table[index];
+            TileInfo info = infoList[infoIndex];
+
             tile.Position = info.Position;
 
             return tile.GetBounds();
