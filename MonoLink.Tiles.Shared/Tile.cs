@@ -8,6 +8,9 @@ using MonoLink;
 
 namespace MonoLink.Tiles
 {
+    /// <summary>
+    /// Representa um tile a ser desenhado na tela.
+    /// </summary>
     public abstract class Tile
     {
         public Game Game { get; }
@@ -63,7 +66,10 @@ namespace MonoLink.Tiles
 
         protected virtual void OnUpdate(GameTime gameTime) { }
         protected virtual void OnDraw(GameTime gameTime, SpriteBatch spriteBatch) { }
-
+       
+        /// <summary>
+        /// Obtém os limites do tile.
+        /// </summary>
         public abstract Rectangle GetBounds();
     }
 }
