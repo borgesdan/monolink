@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace MonoLink.Entity
+namespace MonoLink.Entities
 {
     /// <summary>
     /// Representa um objeto de jogo.

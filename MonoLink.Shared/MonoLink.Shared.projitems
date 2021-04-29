@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IUpdateDraw.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MouseButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Polygon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RotatedRectangle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RotationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SpriteFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SpriteSheet.cs" />

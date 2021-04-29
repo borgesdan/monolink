@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace MonoLink.Screen
+namespace MonoLink.Screens
 {    
     /// <summary>
     /// Representa um gerenciador de telas do jogo.

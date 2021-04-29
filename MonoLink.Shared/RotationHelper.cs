@@ -44,5 +44,27 @@ namespace MonoLink
 
             return new Vector2((float)resultX, (float)resultY);
         }
+
+        /// <summary>
+        /// Obtém a posição de um retângulo rotacionado ao informar a origem e o grau de rotação.
+        /// </summary>
+        /// <param name="rectangle">O retângulo a ser rotacionado.</param>
+        /// <param name="origin">A coordenada na tela que será o pivô para rotação, a origem.</param>
+        /// <param name="radians">O grau da rotação em radianos.</param>
+        public static RotatedRectangle GetRectangle(Rectangle rectangle, Vector2 origin, float radians)
+        {
+            //Top-Left
+            Point p1 = Get(new Point(rectangle.Left, rectangle.Top), origin, radians);
+            //Top-Right
+            Point p2 = Get(new Point(rectangle.Right, rectangle.Top), origin, radians);
+            //Bottom-Right
+            Point p3 = Get(new Point(rectangle.Right, rectangle.Bottom), origin, radians);
+            //Bottom-Left
+            Point p4 = Get(new Point(rectangle.Left, rectangle.Bottom), origin, radians);
+            //Center
+            Point p5 = Get(new Point(rectangle.Center.X, rectangle.Center.Y), origin, radians);
+
+            return new RotatedRectangle(p1, p2, p3, p4, p5);
+        }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace MonoLink.Screen
+namespace MonoLink.Screens
 {
     /// <summary>
     /// Representa uma tela base de jogo.

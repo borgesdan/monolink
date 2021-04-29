@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoLink.Entity
+namespace MonoLink.Entities
 {
     /// <summary>
     /// Representa uma entidade que fornece acesso a atualização e desenho de um Texture2D.
