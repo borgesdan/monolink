@@ -8,18 +8,9 @@ namespace MonoLink.Tiles
     {
         //Lista dos setores que irão compor o mapa final
         readonly int[,][,] sectors = null;
-        //O estilo do tyle, se retângular ou isometrico
-        readonly TileStyle tileType = TileStyle.Rectangle;
-        //Obtém as informações necessárias para o desenho de cada tile
-        readonly List<TileInfo> infoList = new List<TileInfo>();
-        //Obtém o index do tileinfo na var infoList informando a linha e a coluna do mapa
-        //Útil para descobrir rapidamente qual tile o tileinfo referencia
-        readonly Dictionary<Point, int> infoIndexList = new Dictionary<Point, int>();
         //Lista para ser manejada no método Read().
-        List<int[]> total = new List<int[]>();        
+        List<int[]> total = new List<int[]>();
 
-        /// <summary>Obtém ou define a posição inicial para o cálculo de ordenação dos tiles.</summary>
-        public Vector2 StartPosition { get; set; } = Vector2.Zero;
         /// <summary>Obtém a quantidade de linhas de cada setor do mapa.</summary>
         public int Rows { get; private set; } = 10;
         /// <summary>Obtém a quantidade de colunas de cada setor do mapa.</summary>
@@ -125,7 +116,7 @@ namespace MonoLink.Tiles
                 }
             }
 
-            TotalMap = new int[total.Count, total[01].GetLength(0)];
+            finalMap = new int[total.Count, total[01].GetLength(0)];
 
             for (int i = 0; i < total.Count; i++)
             {
@@ -133,7 +124,7 @@ namespace MonoLink.Tiles
 
                 for (int j = 0; j < row.GetLength(0); j++)
                 {
-                    TotalMap[i, j] = row[j];
+                    finalMap[i, j] = row[j];
                 }
             }
 
@@ -145,15 +136,15 @@ namespace MonoLink.Tiles
             IsRead = false;
 
             //dimensões do array
-            int d0 = TotalMap.GetLength(0);
-            int d1 = TotalMap.GetLength(1);
+            int d0 = finalMap.GetLength(0);
+            int d1 = finalMap.GetLength(1);
 
             for (int row = 0; row < d0; row++)
             {
                 for (int col = 0; col < d1; col++)
                 {
                     //O valor da posição no array
-                    int index = TotalMap[row, col];
+                    int index = finalMap[row, col];
                     //Recebe o Tile da tabela
                     //Dictionary<int, Tile> table = point_sector[new Point(row, col)].Table;
 
@@ -186,8 +177,8 @@ namespace MonoLink.Tiles
 
                         TileInfo info;
                         info.Position = new Vector2(x, y);
-                        info.Index = index;
-                        //info.MapPoint = new Point(row, col);
+                        info.Value = index;
+                        info.Color = Color.White;
 
                         infoList.Add(info);
 
@@ -232,7 +223,7 @@ namespace MonoLink.Tiles
         /// <param name="column">A coluna desejada.</param>
         public override Rectangle GetTileBounds(int row, int column)
         {
-            int index = TotalMap[row, column];
+            int index = finalMap[row, column];
             int infoIndex = infoIndexList[new Point(row, column)];
 
             T tile = Table[index];
@@ -246,12 +237,63 @@ namespace MonoLink.Tiles
         /// <summary>
         /// Obtém os limites do tile informando a linha e a coluna de um setor.
         /// </summary>
+        /// <param name="sector">O setor a ser buscado.</param>
         /// <param name="row">A linha desejada.</param>
         /// <param name="column">A coluna desejada.</param>
         public Rectangle GetTileBounds(Point sector, int row, int column)
         {
             Point p = GetPoint(sector, row, column);
             return GetTileBounds(p.X, p.Y);
+        }
+
+        /// <summary>
+        /// Movimenta o tile com um determinado valor de acrescimo.
+        /// </summary>
+        /// <param name="sector">O setor a ser buscado.</param>
+        /// <param name="row">A linha no mapa.</param>
+        /// <param name="column">A coluna no mapa.</param>
+        /// <param name="amount">O valor da movimentação a ser acrescido.</param>
+        public void Move(Point sector, int row, int column, Vector2 amount)
+        {
+            Point p = GetPoint(sector, row, column);
+            Move(p.X, p.Y, amount);
+        }
+
+        /// <summary>
+        /// Substitui um determinado TileInfo ao informar a linha e coluna no mapa.
+        /// </summary>
+        /// <param name="sector">O setor a ser buscado.</param>
+        /// <param name="row">A linha no mapa.</param>
+        /// <param name="column">A coluna no mapa.</param>
+        /// <param name="tileInfo">O objeto TileInfo para substituição.</param>
+        public void Replace(Point sector, int row, int column, TileInfo tileInfo)
+        {
+            Point p = GetPoint(sector, row, column);
+            Replace(p.X, p.Y, tileInfo);
+        }
+
+        /// <summary>
+        /// Obtém um objeto TileInfo ao informar a linha e a coluna no mapa.
+        /// </summary>
+        /// <param name="sector">O setor a ser buscado.</param>
+        /// <param name="row">A linha no mapa.</param>
+        /// <param name="column">A coluna no mapa.</param>
+        public TileInfo GetTileInfo(Point sector, int row, int column)
+        {
+            Point p = GetPoint(sector, row, column);
+            return GetTileInfo(p.X, p.Y);
+        }
+
+        /// <summary>
+        /// Procura e retorna a posição de um TileInfo na propriedade TileInfos ao informar a linha e a coluna no mapa.
+        /// </summary>
+        /// <param name="sector">O setor a ser buscado.</param>
+        /// <param name="row">A linha no mapa.</param>
+        /// <param name="column">A coluna no mapa.</param>
+        public int GetTileInfoIndex(Point sector, int row, int column)
+        {
+            Point p = GetPoint(sector, row, column);
+            return GetTileInfoIndex(p.X, p.Y);
         }
 
         /// <summary>
@@ -273,8 +315,9 @@ namespace MonoLink.Tiles
         {
             for (int i = 0; i < infoList.Count; i++)
             {
-                var tile = Table[infoList[i].Index];
+                var tile = Table[infoList[i].Value];
                 tile.Position = infoList[i].Position;
+                tile.Color = infoList[i].Color;
                 tile.Draw(gameTime, spriteBatch);
             }
         }

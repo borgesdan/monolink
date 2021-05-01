@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MonoLink.Screen
+namespace MonoLink.Screens
 {
     //TODO: Não implementado
     public sealed class InfinityLayer<T> : ScreenLayer where T : Animation2D

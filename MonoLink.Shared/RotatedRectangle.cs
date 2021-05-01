@@ -83,7 +83,14 @@ namespace MonoLink
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(P1, P2, P3, P4, Center);
+            int hashCode = -856949754;
+            hashCode = hashCode * -1521134295 + this.P1.GetHashCode();
+            hashCode = hashCode * -1521134295 + this.P2.GetHashCode();
+            hashCode = hashCode * -1521134295 + this.P3.GetHashCode();
+            hashCode = hashCode * -1521134295 + this.P4.GetHashCode();
+            hashCode = hashCode * -1521134295 + this.Center.GetHashCode();
+
+            return hashCode;
         }
 
         public static bool operator ==(RotatedRectangle left, RotatedRectangle right)

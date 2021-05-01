@@ -30,6 +30,18 @@ namespace MonoLink.Tiles
         }
 
         /// <summary>
+        /// Inicializa uma nova instância da classe.
+        /// </summary>
+        /// <param name="game">A instância da classe Game.</param>
+        /// <param name="texturePath">O caminho da textura na pasta content.</param>
+        /// <param name="frame">O frame da textura.</param>
+        public TexturedTile(Game game, string texturePath, Rectangle? frame = null) : base(game)
+        {
+            Texture = game.Content.Load<Texture2D>(texturePath);
+            Frame = frame;
+        }
+
+        /// <summary>
         /// Inicializa uma nova instância da classe como cópia da outra instância.
         /// </summary>
         /// <param name="source">A instância a ser copiada.</param>

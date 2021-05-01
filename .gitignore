@@ -2,6 +2,8 @@
 .vs/
 game1/
 librarys/
+isogame/
+isogame.core/
 
 #Solucao
 *.sln

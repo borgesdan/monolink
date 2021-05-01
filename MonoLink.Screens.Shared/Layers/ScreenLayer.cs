@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoLink.Screen
+namespace MonoLink.Screens
 {
     /// <summary>
     /// Classe que representa uma camada de exibição de uma tela.

@@ -10,17 +10,6 @@ namespace MonoLink.Tiles
     /// <typeparam name="T">T é uma classe que herda de Tile.</typeparam>
     public class TileMapReader<T> : TileReader<T> where T : Tile
     {
-        //O estilo do tyle, se retângular ou isometrico
-        readonly TileStyle tileType = TileStyle.Rectangle;
-        //Obtém as informações necessárias para o desenho de cada tile
-        readonly List<TileInfo> infoList = new List<TileInfo>();
-        //Obtém o index do tileinfo na var infoList informando a linha e a coluna do mapa
-        //Útil para descobrir rapidamente qual tile o tileinfo referencia
-        readonly Dictionary<Point, int> infoIndexList = new Dictionary<Point, int>();
-
-        /// <summary>Obtém ou define a posição inicial para o cálculo de ordenação dos tiles.</summary>
-        public Vector2 StartPosition { get; set; } = Vector2.Zero;
-
         /// <summary>
         /// Inicializa uma nova instância da classe.
         /// </summary>
@@ -31,7 +20,7 @@ namespace MonoLink.Tiles
         /// <param name="tileHeight">A altura dos tiles.</param>
         public TileMapReader(int[,] map, Dictionary<int, T> table, TileStyle type, int tileWidth, int tileHeight) : base(table, tileWidth, tileHeight)
         {
-            TotalMap = map;
+            finalMap = map;
             tileType = type;
         }
 
@@ -47,7 +36,7 @@ namespace MonoLink.Tiles
                 this.infoList.Add(i);
 
             this.StartPosition = source.StartPosition;
-        }
+        }        
 
         /// <summary>
         /// Lê o array contido no mapa e ordena as posições dos tiles.
@@ -57,15 +46,15 @@ namespace MonoLink.Tiles
             IsRead = false;
 
             //dimensões do array
-            int d0 = TotalMap.GetLength(0);
-            int d1 = TotalMap.GetLength(1);
+            int d0 = finalMap.GetLength(0);
+            int d1 = finalMap.GetLength(1);
 
             for (int row = 0; row < d0; row++)
             {
                 for (int col = 0; col < d1; col++)
                 {
                     //O valor da posição no array
-                    int index = TotalMap[row, col];                    
+                    int index = finalMap[row, col];                    
 
                     if(Table.ContainsKey(index))
                     {
@@ -96,7 +85,8 @@ namespace MonoLink.Tiles
 
                         TileInfo info;
                         info.Position = new Vector2(x, y);
-                        info.Index = index;
+                        info.Value = index;
+                        info.Color = Color.White;
 
                         infoList.Add(info);
                         infoIndexList.Add(new Point(row, col), infoList.Count - 1);
@@ -126,9 +116,9 @@ namespace MonoLink.Tiles
         {
             for(int i = 0; i < infoList.Count; i++)
             {
-                var tile = Table[infoList[i].Index];
-
+                var tile = Table[infoList[i].Value];
                 tile.Position = infoList[i].Position;
+                tile.Color = infoList[i].Color;
                 tile.Draw(gameTime, spriteBatch);
             }
         }
@@ -140,13 +130,14 @@ namespace MonoLink.Tiles
         /// <param name="column">A coluna desejada.</param>        
         public override Rectangle GetTileBounds(int row, int column)
         {
-            int index = TotalMap[row, column];            
-            int infoIndex = infoIndexList[new Point(row, column)];            
+            int index = finalMap[row, column];            
+            int infoIndex = infoIndexList[new Point(row, column)];         
 
             T tile = Table[index];
             TileInfo info = infoList[infoIndex];
 
             tile.Position = info.Position;
+            tile.Color = info.Color;
 
             return tile.GetBounds();
         }
