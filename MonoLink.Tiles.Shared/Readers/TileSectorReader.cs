@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MonoLink.Tiles
 {
-    public class TileSectorReader<T> : TileReader<T> where T : Tile
+    public class TileSectorReader : TileReader
     {
         //Lista dos setores que irão compor o mapa final
         readonly int[,][,] sectors = null;
@@ -26,7 +26,7 @@ namespace MonoLink.Tiles
         /// <param name="tileHeight">A altura dos tiles.</param>
         /// <param name="rows">A quantidade de linhas de cada array que representa os setores de um mapa.</param>
         /// <param name="columns">A quantidade de colunas de cada array que representa os setores de um mapa.</param>        
-        public TileSectorReader(int[,][,] sectors, Dictionary<int, T> table, TileStyle type, int tileWidth, int tileHeight, int rows, int columns) : base(table, tileWidth, tileHeight)
+        public TileSectorReader(int[,][,] sectors, Dictionary<int, Tile> table, TileStyle type, int tileWidth, int tileHeight, int rows, int columns) : base(table, tileWidth, tileHeight)
         {
             this.sectors = sectors;
 
@@ -40,10 +40,8 @@ namespace MonoLink.Tiles
         /// Inicializa uma nova instância da classe como cópia de outra instância.
         /// </summary>
         /// <param name="source">A instância a ser copiada.</param>
-        public TileSectorReader(TileSectorReader<T> source) : base(source)
+        public TileSectorReader(TileSectorReader source) : base(source)
         {
-            this.tileType = source.tileType;
-
             foreach (int[] t in source.total)
                 this.total.Add(t);
             
@@ -52,7 +50,6 @@ namespace MonoLink.Tiles
             foreach (TileInfo i in source.infoList)
                 this.infoList.Add(i);
 
-            this.StartPosition = source.StartPosition;
             this.Rows = source.Rows;
             this.Columns = source.Columns;
         }
@@ -214,25 +211,7 @@ namespace MonoLink.Tiles
         {
             int[,] m = sectors[sector.X, sector.Y];
             return m[row, column];
-        }
-
-        /// <summary>
-        /// Obtém os limites do tile informando a linha e a coluna do mapa final.
-        /// </summary>
-        /// <param name="row">A linha desejada.</param>
-        /// <param name="column">A coluna desejada.</param>
-        public override Rectangle GetTileBounds(int row, int column)
-        {
-            int index = finalMap[row, column];
-            int infoIndex = infoIndexList[new Point(row, column)];
-
-            T tile = Table[index];
-            TileInfo info = infoList[infoIndex];
-
-            tile.Position = info.Position;
-
-            return tile.GetBounds();
-        }
+        }        
 
         /// <summary>
         /// Obtém os limites do tile informando a linha e a coluna de um setor.

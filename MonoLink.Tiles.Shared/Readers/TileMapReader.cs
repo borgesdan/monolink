@@ -6,9 +6,8 @@ namespace MonoLink.Tiles
 {
     /// <summary>
     /// Representa uma classe que desenha os tiles na tela através da leitura de um dicionário int-tile.
-    /// </summary>
-    /// <typeparam name="T">T é uma classe que herda de Tile.</typeparam>
-    public class TileMapReader<T> : TileReader<T> where T : Tile
+    /// </summary>    
+    public class TileMapReader : TileReader
     {
         /// <summary>
         /// Inicializa uma nova instância da classe.
@@ -18,7 +17,7 @@ namespace MonoLink.Tiles
         /// <param name="type">O estilo do tile a ser desenhado na tela.</param>
         /// <param name="tileWidth">A largura dos tiles.</param>
         /// <param name="tileHeight">A altura dos tiles.</param>
-        public TileMapReader(int[,] map, Dictionary<int, T> table, TileStyle type, int tileWidth, int tileHeight) : base(table, tileWidth, tileHeight)
+        public TileMapReader(int[,] map, Dictionary<int, Tile> table, TileStyle type, int tileWidth, int tileHeight) : base(table, tileWidth, tileHeight)
         {
             finalMap = map;
             tileType = type;
@@ -28,14 +27,10 @@ namespace MonoLink.Tiles
         /// Inicializa uma nova instância da classe como cópia de outra instância.
         /// </summary>
         /// <param name="source">A instância a ser copiada.</param>
-        public TileMapReader(TileMapReader<T> source) : base(source)
+        public TileMapReader(TileMapReader source) : base(source)
         {
-            this.tileType = source.tileType;
-
             foreach (TileInfo i in source.infoList)
                 this.infoList.Add(i);
-
-            this.StartPosition = source.StartPosition;
         }        
 
         /// <summary>
@@ -121,25 +116,6 @@ namespace MonoLink.Tiles
                 tile.Color = infoList[i].Color;
                 tile.Draw(gameTime, spriteBatch);
             }
-        }
-
-        /// <summary>
-        /// Obtém os limites do tile informando a linha e a coluna do mapa.
-        /// </summary>
-        /// <param name="row">A linha desejada.</param>
-        /// <param name="column">A coluna desejada.</param>        
-        public override Rectangle GetTileBounds(int row, int column)
-        {
-            int index = finalMap[row, column];            
-            int infoIndex = infoIndexList[new Point(row, column)];         
-
-            T tile = Table[index];
-            TileInfo info = infoList[infoIndex];
-
-            tile.Position = info.Position;
-            tile.Color = info.Color;
-
-            return tile.GetBounds();
-        }
+        }        
     }
 }

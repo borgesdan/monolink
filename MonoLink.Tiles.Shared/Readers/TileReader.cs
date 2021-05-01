@@ -7,8 +7,7 @@ namespace MonoLink.Tiles
     /// <summary>
     /// Classe abstrada que desenha tiles na tela através de um array bidimensional de inteiros.
     /// </summary>
-    /// <typeparam name="T">T é uma classe que herda de Tile.</typeparam>
-    public abstract class TileReader<T> : ITileReader where T : Tile
+    public abstract class TileReader
     {
         protected int[,] finalMap = null;
         //O estilo do tyle, se retângular ou isometrico
@@ -31,16 +30,16 @@ namespace MonoLink.Tiles
         /// <summary>Obtém ou define a altura dos tiles para cálculos posteriores.</summary>
         public int TileHeight { get; protected set; } = 0;
         /// <summary>Obtém ou define a tabela de índices com seus respectivos Tiles.</summary>
-        public Dictionary<int, T> Table { get; protected set; } = new Dictionary<int, T>();
+        public Dictionary<int, Tile> Table { get; protected set; } = new Dictionary<int, Tile>();
 
-        protected TileReader(Dictionary<int, T> table, int tileWidth, int tileHeight)
+        protected TileReader(Dictionary<int, Tile> table, int tileWidth, int tileHeight)
         {
             TileWidth = tileWidth;
             TileHeight = tileHeight;
             Table = table;
         }
 
-        protected TileReader(TileReader<T> source)
+        protected TileReader(TileReader source)
         {
             this.finalMap = (int[,])source.finalMap.Clone();
             this.IsRead = source.IsRead;
@@ -138,6 +137,18 @@ namespace MonoLink.Tiles
             }
         }
 
-        public abstract Rectangle GetTileBounds(int row, int column);
+        public virtual Rectangle GetTileBounds(int row, int column)
+        {
+            int index = finalMap[row, column];
+            int infoIndex = infoIndexList[new Point(row, column)];
+
+            Tile tile = Table[index];
+            TileInfo info = infoList[infoIndex];
+
+            tile.Position = info.Position;
+            tile.Color = info.Color;
+
+            return tile.GetBounds();
+        }
     }
 }
