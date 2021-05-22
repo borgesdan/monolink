@@ -29,8 +29,6 @@ namespace MonoLink.Tiles
         /// <param name="source">A instância a ser copiada.</param>
         public TileMapReader(TileMapReader source) : base(source)
         {
-            foreach (TileInfo i in source.infoList)
-                this.infoList.Add(i);
         }        
 
         /// <summary>

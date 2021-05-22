@@ -9,9 +9,9 @@ namespace MonoLink.Tiles
     {
         /// <summary>Obtém a posiçao do tile na tela.</summary>
         public Vector2 Position;
-        /// <summary>Obtém o valor do tile em uma linha e coluna no mapa de inteiros.</summary>
+        /// <summary>Obtém o valor da coordenada no mapa em que se encontra o TileInfo.</summary>
         public int Value;
-        /// <summary>Obtém a cor a ser utilizada no Tile.s</summary>
+        /// <summary>Obtém a cor a ser utilizada no Tile</summary>
         public Color Color;
     }
 }

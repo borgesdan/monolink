@@ -188,25 +188,25 @@ namespace MonoLink.Tiles
         }
 
         /// <summary>
-        /// Obtém a linha e a coluna do mapa final informando a linha e a coluna do setor.
+        /// Obtém as coordenadas no mapa final informando a linha e a coluna do setor.
         /// </summary>
         /// <param name="sector">O setor informado.</param>
         /// <param name="row">A linha do setor.</param>
         /// <param name="column">A coluna do setor.</param>
-        public Point GetPoint(Point sector, int row, int column)
+        public Point GetCoord(Point sector, int row, int column)
         {
             int r = (Rows * sector.X) + row;
             int c = (Columns * sector.Y) + column;
 
             return new Point(r, c);
-        }        
+        }
 
         /// <summary>
-        /// Obtém o valor da posição informada.
+        /// Obtém o valor da coordenada desejada.
         /// </summary>
         /// <param name="sector">O setor a ser buscado.</param>
-        /// <param name="row">A linha desejada do setor.</param>
-        /// <param name="column">A coluna desejada do setor.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
         public int GetValue(Point sector, int row, int column)
         {
             int[,] m = sectors[sector.X, sector.Y];
@@ -214,14 +214,14 @@ namespace MonoLink.Tiles
         }        
 
         /// <summary>
-        /// Obtém os limites do tile informando a linha e a coluna de um setor.
+        /// Obtém os limites do tile informando a coordenada do setor.
         /// </summary>
         /// <param name="sector">O setor a ser buscado.</param>
-        /// <param name="row">A linha desejada.</param>
-        /// <param name="column">A coluna desejada.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
         public Rectangle GetTileBounds(Point sector, int row, int column)
         {
-            Point p = GetPoint(sector, row, column);
+            Point p = GetCoord(sector, row, column);
             return GetTileBounds(p.X, p.Y);
         }
 
@@ -229,25 +229,25 @@ namespace MonoLink.Tiles
         /// Movimenta o tile com um determinado valor de acrescimo.
         /// </summary>
         /// <param name="sector">O setor a ser buscado.</param>
-        /// <param name="row">A linha no mapa.</param>
-        /// <param name="column">A coluna no mapa.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
         /// <param name="amount">O valor da movimentação a ser acrescido.</param>
         public void Move(Point sector, int row, int column, Vector2 amount)
         {
-            Point p = GetPoint(sector, row, column);
+            Point p = GetCoord(sector, row, column);
             Move(p.X, p.Y, amount);
-        }
+        }        
 
         /// <summary>
         /// Substitui um determinado TileInfo ao informar a linha e coluna no mapa.
         /// </summary>
         /// <param name="sector">O setor a ser buscado.</param>
-        /// <param name="row">A linha no mapa.</param>
-        /// <param name="column">A coluna no mapa.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
         /// <param name="tileInfo">O objeto TileInfo para substituição.</param>
         public void Replace(Point sector, int row, int column, TileInfo tileInfo)
         {
-            Point p = GetPoint(sector, row, column);
+            Point p = GetCoord(sector, row, column);
             Replace(p.X, p.Y, tileInfo);
         }
 
@@ -255,11 +255,11 @@ namespace MonoLink.Tiles
         /// Obtém um objeto TileInfo ao informar a linha e a coluna no mapa.
         /// </summary>
         /// <param name="sector">O setor a ser buscado.</param>
-        /// <param name="row">A linha no mapa.</param>
-        /// <param name="column">A coluna no mapa.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
         public TileInfo GetTileInfo(Point sector, int row, int column)
         {
-            Point p = GetPoint(sector, row, column);
+            Point p = GetCoord(sector, row, column);
             return GetTileInfo(p.X, p.Y);
         }
 
@@ -267,12 +267,24 @@ namespace MonoLink.Tiles
         /// Procura e retorna a posição de um TileInfo na propriedade TileInfos ao informar a linha e a coluna no mapa.
         /// </summary>
         /// <param name="sector">O setor a ser buscado.</param>
-        /// <param name="row">A linha no mapa.</param>
-        /// <param name="column">A coluna no mapa.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
         public int GetTileInfoIndex(Point sector, int row, int column)
         {
-            Point p = GetPoint(sector, row, column);
+            Point p = GetCoord(sector, row, column);
             return GetTileInfoIndex(p.X, p.Y);
+        }
+
+        /// <summary>
+        /// Verifica se existe um objeto TileInfo nas coordenadas do mapa.
+        /// </summary>
+        /// <param name="sector">O setor a ser buscado.</param>
+        /// <param name="row">A linha do setor.</param>
+        /// <param name="column">A coluna do setor.</param>
+        public bool CheckTileInfo(Point sector, int row, int column)
+        {
+            Point p = GetCoord(sector, row, column);
+            return CheckTileInfo(p.X, p.Y);
         }
 
         /// <summary>

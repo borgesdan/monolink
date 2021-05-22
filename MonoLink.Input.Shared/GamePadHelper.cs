@@ -13,6 +13,10 @@ namespace MonoLink.Input
         private KeyboardState keyboardState = new KeyboardState();
         private KeyboardState lastKeyboardState = new KeyboardState();
 
+        /// <summary>
+        /// Obtém ou define se o teclado pode ser utilizado mesmo com o GamePad conectado.
+        /// </summary>
+        public bool AlwaysEnabledKeyboard { get; set; } = true;
         /// <sumary>Obtém ou define se esta instância está disponível para ser atualizada.</sumary>
         public bool IsEnabled { get; set; } = true;
         /// <summary>Obtém o estado atual do GamePad.</summary>
@@ -30,9 +34,7 @@ namespace MonoLink.Input
                 map = value;
                 
                 if(map != null)
-                {
                     keyboardMap = map.GetKeyboardMap();
-                }
             }
         }
 
@@ -43,10 +45,8 @@ namespace MonoLink.Input
         /// <param name="map">O mapeamento de teclas do teclado para os botões do GamePad.</param>        
         public GamePadHelper(PlayerIndex playerIndex, KeyButtonMap map = null)
         {
-            Index = playerIndex;       
-
-            if (map != null)
-                Map = map;
+            Index = playerIndex;
+            Map = map;
         }
 
         //---------------------------------------//
@@ -80,8 +80,8 @@ namespace MonoLink.Input
         private bool CheckButton(Buttons button, Predicate<Keys> function)
         {
             Keys? k = null;
-            if (keyboardMap != null)
-                k = keyboardMap[button];
+            if (keyboardMap != null && keyboardMap.ContainsKey(button))
+                k = keyboardMap[button];  
 
             return k.HasValue && function.Invoke(k.Value);
         }
@@ -92,7 +92,13 @@ namespace MonoLink.Input
         {
             if(State.IsConnected)
             {
-                return State.IsButtonDown(button);
+                //return State.IsButtonDown(button)
+                //    || (!AlwaysEnabledKeyboard && CheckButton(button, keyboardState.IsKeyDown));
+
+                bool state = State.IsButtonDown(button);
+                bool cond = AlwaysEnabledKeyboard && CheckButton(button, keyboardState.IsKeyDown);
+
+                return state || cond;
             }
             else
             {
@@ -106,7 +112,13 @@ namespace MonoLink.Input
         {
             if (State.IsConnected)
             {
-                return OldState.IsButtonUp(button) && State.IsButtonDown(button);
+                //return OldState.IsButtonUp(button) && State.IsButtonDown(button)
+                //    || (AlwaysEnabledKeyboard && (CheckButton(button, lastKeyboardState.IsKeyUp) && CheckButton(button, keyboardState.IsKeyDown)));
+
+                bool state = OldState.IsButtonUp(button) && State.IsButtonDown(button);
+                bool cond = AlwaysEnabledKeyboard && (CheckButton(button, lastKeyboardState.IsKeyUp) && CheckButton(button, keyboardState.IsKeyDown));
+
+                return state || cond;
             }
             else
             {
@@ -120,7 +132,13 @@ namespace MonoLink.Input
         {
             if (State.IsConnected)
             {
-                return OldState.IsButtonDown(button) && State.IsButtonUp(button);
+                //return OldState.IsButtonDown(button) && State.IsButtonUp(button)
+                //    || (AlwaysEnabledKeyboard && (CheckButton(button, lastKeyboardState.IsKeyDown) && CheckButton(button, keyboardState.IsKeyUp)));
+
+                bool state = OldState.IsButtonDown(button) && State.IsButtonUp(button);
+                bool cond = AlwaysEnabledKeyboard && (CheckButton(button, lastKeyboardState.IsKeyDown) && CheckButton(button, keyboardState.IsKeyUp));
+
+                return state || cond;
             }
             else
             {
@@ -134,7 +152,13 @@ namespace MonoLink.Input
         {
             if (State.IsConnected)
             {
-                return State.IsButtonUp(button);
+                //return State.IsButtonUp(button)
+                //    || (AlwaysEnabledKeyboard && CheckButton(button, keyboardState.IsKeyUp));
+
+                bool state = State.IsButtonUp(button);
+                bool cond = AlwaysEnabledKeyboard && CheckButton(button, keyboardState.IsKeyUp);
+
+                return state || cond;
             }
             else
             {
@@ -145,49 +169,35 @@ namespace MonoLink.Input
         /// <summary>Verifica o estado da analógico esquerdo.</summary>        
         public Vector2 GetLeftThumbState()
         {
-            Vector2 thumb = Vector2.Zero;
+            Vector2 thumb;
 
             if (State.IsConnected)
             {
                 thumb = State.ThumbSticks.Left;
+
+                if (thumb == Vector2.Zero && AlwaysEnabledKeyboard)
+                    thumb = GetLeftThumbKeyboard();
             }
-            else if (keyboardMap != null)
+            else
             {
-                var kUp = keyboardMap[Buttons.LeftThumbstickUp];
-                var kDown = keyboardMap[Buttons.LeftThumbstickDown];
-                var kRight = keyboardMap[Buttons.LeftThumbstickRight];
-                var kLeft = keyboardMap[Buttons.LeftThumbstickLeft];
-
-                if (kUp != null)
-                {
-                    if (keyboardState.IsKeyDown(kUp.Value))
-                    {
-                        thumb.Y = 1;
-                    }                    
-                }
-                if (kDown != null)
-                {
-                    if (keyboardState.IsKeyDown(kDown.Value))
-                    {
-                        thumb.Y = -1;
-                    }
-                }
-
-                if (kRight != null)
-                {
-                    if (keyboardState.IsKeyDown(kRight.Value))
-                    {
-                        thumb.X = 1;
-                    }                    
-                }
-                if (kLeft != null)
-                {
-                    if (keyboardState.IsKeyDown(kLeft.Value))
-                    {
-                        thumb.X = -1;
-                    }
-                }
+                thumb = GetLeftThumbKeyboard();                
             }
+
+            return thumb;
+        }
+
+        private Vector2 GetLeftThumbKeyboard()
+        {
+            Vector2 thumb = Vector2.Zero;
+
+            if(CheckButton(Buttons.LeftThumbstickUp, keyboardState.IsKeyDown))
+                thumb.Y = 1;
+            if (CheckButton(Buttons.LeftThumbstickDown, keyboardState.IsKeyDown))
+                thumb.Y = -1;
+            if (CheckButton(Buttons.LeftThumbstickRight, keyboardState.IsKeyDown))
+                thumb.X = 1;
+            if (CheckButton(Buttons.LeftThumbstickLeft, keyboardState.IsKeyDown))
+                thumb.X = -1;
 
             return thumb;
         }
@@ -195,49 +205,35 @@ namespace MonoLink.Input
         /// <summary>Verifica o estado da analógico direito.</summary>
         public Vector2 GetRightThumbState()
         {
-            Vector2 thumb = Vector2.Zero;
+            Vector2 thumb;
 
             if (State.IsConnected)
             {
                 thumb = State.ThumbSticks.Left;
+                
+                if (thumb == Vector2.Zero && AlwaysEnabledKeyboard)
+                    thumb = GetRightThumbKeyboard();
             }
-            else if (keyboardMap != null)
+            else
             {
-                var kUp = keyboardMap[Buttons.RightThumbstickUp];
-                var kDown = keyboardMap[Buttons.RightThumbstickDown];
-                var kRight = keyboardMap[Buttons.RightThumbstickRight];
-                var kLeft = keyboardMap[Buttons.RightThumbstickLeft];
-
-                if (kUp != null)
-                {
-                    if (keyboardState.IsKeyDown(kUp.Value))
-                    {
-                        thumb.Y = 1;
-                    }                    
-                }
-                if (kDown != null)
-                {
-                    if (keyboardState.IsKeyDown(kDown.Value))
-                    {
-                        thumb.Y = -1;
-                    }
-                }
-
-                if (kRight != null)
-                {
-                    if (keyboardState.IsKeyDown(kRight.Value))
-                    {
-                        thumb.X = 1;
-                    }                    
-                }
-                if (kLeft != null)
-                {
-                    if (keyboardState.IsKeyDown(kLeft.Value))
-                    {
-                        thumb.X = -1;
-                    }
-                }
+                thumb = GetRightThumbKeyboard();
             }
+
+            return thumb;
+        }
+
+        private Vector2 GetRightThumbKeyboard()
+        {
+            Vector2 thumb = Vector2.Zero;
+
+            if (CheckButton(Buttons.RightThumbstickUp, keyboardState.IsKeyDown))
+                thumb.Y = 1;
+            if (CheckButton(Buttons.RightThumbstickDown, keyboardState.IsKeyDown))
+                thumb.Y = -1;
+            if (CheckButton(Buttons.RightThumbstickRight, keyboardState.IsKeyDown))
+                thumb.X = 1;
+            if (CheckButton(Buttons.RightThumbstickLeft, keyboardState.IsKeyDown))
+                thumb.X = -1;
 
             return thumb;
         }

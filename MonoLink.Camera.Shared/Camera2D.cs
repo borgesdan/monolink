@@ -19,7 +19,7 @@ namespace MonoLink.Camera
         /// <summary>Obtém ou define o zoom da câmera.</summary>
         public float Zoom { get; set; } = 1;
         /// <summary>Obtém ou define o deslocamento do zoom.</summary>
-        public Vector2 ZoomOffset { get; set; }
+        public Vector2 ZoomOffset { get; set; } = Vector2.Zero;
 
         /// <summary>Obtém ou define a posição da câmera.</summary>
         public Vector2 Position { get; set; }
@@ -112,9 +112,12 @@ namespace MonoLink.Camera
         /// </summary>
         public Matrix GetTransform()
         {
-            return Matrix.CreateTranslation(-X - ZoomOffset.X, -Y - ZoomOffset.Y, 0)
+            return Matrix.CreateTranslation(-ZoomOffset.X, -ZoomOffset.Y, 0)
                 * Matrix.CreateScale(Zoom, Zoom, 1)
-                * Matrix.CreateTranslation(ZoomOffset.X, ZoomOffset.Y, 0);
+                * Matrix.CreateTranslation((Position.X * -1) + ZoomOffset.X, (Position.Y * -1) + ZoomOffset.Y, 0);
+
+            //Position.X(Y) * -1 para inverter o valor de deslocamento da câmera, se não, fica a impressão de que
+            //a câmera está com o sentido errado ao ser movimentada
         }
     }
 }

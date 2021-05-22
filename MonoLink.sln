@@ -27,14 +27,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Tiles.Shared", "Mo
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoLink.Collisions.Shared", "MonoLink.Collisions.Shared\MonoLink.Collisions.Shared.shproj", "{A6DBE038-B8AA-44B7-8EDD-B96419FB750D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsoGame", "IsoGame\IsoGame.csproj", "{0C3B2971-85DB-4DD0-9765-92997418BBA3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsoGame.Core", "IsoGame.Core\IsoGame.Core.csproj", "{265CCED3-BAFA-416E-86D8-4E5CC4DEF34C}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		MonoLink.Shared\MonoLink.Shared.projitems*{265cced3-bafa-416e-86d8-4e5cc4def34c}*SharedItemsImports = 5
-		MonoLink.Tiles.Shared\MonoLink.Tiles.Shared.projitems*{265cced3-bafa-416e-86d8-4e5cc4def34c}*SharedItemsImports = 5
 		MonoLink.Camera.Shared\MonoLink.Camera.Shared.projitems*{5ae67349-a052-4e24-b7c1-8578d3120249}*SharedItemsImports = 13
 		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{77131e2b-991a-42aa-9d2f-c48478910df3}*SharedItemsImports = 13
 		MonoLink.Input.Shared\MonoLink.Input.Shared.projitems*{7e5374d2-76bd-49da-b1cb-bcc1422cf6b7}*SharedItemsImports = 5
@@ -69,14 +63,6 @@ Global
 		{D9674F45-B3D1-4297-AB92-0595909B322B}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{D9674F45-B3D1-4297-AB92-0595909B322B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9674F45-B3D1-4297-AB92-0595909B322B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C3B2971-85DB-4DD0-9765-92997418BBA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C3B2971-85DB-4DD0-9765-92997418BBA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C3B2971-85DB-4DD0-9765-92997418BBA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C3B2971-85DB-4DD0-9765-92997418BBA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{265CCED3-BAFA-416E-86D8-4E5CC4DEF34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{265CCED3-BAFA-416E-86D8-4E5CC4DEF34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{265CCED3-BAFA-416E-86D8-4E5CC4DEF34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{265CCED3-BAFA-416E-86D8-4E5CC4DEF34C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -53,7 +53,7 @@ namespace MonoLink.Tiles
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
         /// <summary>
-        /// Obtém o valor da posição informada no mapa.
+        /// Obtém o valor da coordenada no mapa.
         /// </summary>
         /// <param name="row">A linha desejada.</param>
         /// <param name="column">A coluna desejada.</param>
@@ -71,16 +71,16 @@ namespace MonoLink.Tiles
         }
 
         /// <summary>
-        /// Obtém o número de elementos do mapa total informando a dimensão.
+        /// Obtém o número de elementos do mapa informando a sua dimensão.
         /// </summary>
-        /// <param name="dimension">Linha = 0 ou coluna = 1</param>        
+        /// <param name="dimension">Somente duas dimensões, linha = 0 ou coluna = 1.</param>
         public int GetLength(int dimension)
         {
             return finalMap.GetLength(dimension);
         }
 
         /// <summary>
-        /// Procura e retorna a posição de um TileInfo na propriedade TileInfos ao informar a linha e a coluna no mapa.
+        /// Busca e retorna o index de um TileInfo dentro da lista TileInfos as coordenadas no mapa.
         /// </summary>
         /// <param name="row">A linha no mapa.</param>
         /// <param name="column">A coluna no mapa.</param>
@@ -90,7 +90,7 @@ namespace MonoLink.Tiles
         }
 
         /// <summary>
-        /// Obtém um objeto TileInfo ao informar a linha e a coluna no mapa.
+        /// Obtém um objeto TileInfo ao informar as coordenadas no mapa.
         /// </summary>
         /// <param name="row">A linha no mapa.</param>
         /// <param name="column">A coluna no mapa.</param>
@@ -101,7 +101,7 @@ namespace MonoLink.Tiles
         }
 
         /// <summary>
-        /// Substitui um determinado TileInfo ao informar a linha e coluna no mapa.
+        /// Substitui um determinado TileInfo ao informar as coordenadas no mapa.
         /// </summary>
         /// <param name="row">A linha no mapa.</param>
         /// <param name="column">A coluna no mapa.</param>
@@ -113,7 +113,7 @@ namespace MonoLink.Tiles
         }
 
         /// <summary>
-        /// Movimenta o tile com um determinado valor de acrescimo.
+        /// Incrementa a posição de um TileInfo com um determinado valor de acrescimo ao informar as coordenadas no mapa.
         /// </summary>
         /// <param name="row">A linha no mapa.</param>
         /// <param name="column">A coluna no mapa.</param>
@@ -126,17 +126,43 @@ namespace MonoLink.Tiles
             infoList[infoIndex] = info;
         }
 
+        /// <summary>
+        /// Incrementa a posição de vários TileInfo com um determinado valor de acrescimo ao infomar as coordenadas de início e fim no mapa.
+        /// </summary>
+        /// <param name="startRow">A linha no mapa a ser o ponto de partida.</param>
+        /// <param name="endRow">A linha no mapa que será o ponto final.</param>
+        /// <param name="startColumn">A coluna no mapa a ser o ponto de partida.</param>
+        /// <param name="endColumn">A coluna no mapa que será o ponto final.</param>
+        /// <param name="amount">O valor de movimentação a ser acrescido.</param>
         public void MoveRange(int startRow, int endRow, int startColumn, int endColumn, Vector2 amount)
         {
             for (int r = startRow; r < endRow + 1; r++)
             {
                 for (int c = startColumn; c < endColumn + 1; c++)
                 {
-                    Move(r, c, amount);
+                    if(CheckTileInfo(r, c))
+                    {
+                        Move(r, c, amount);
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Verifica se existe um objeto TileInfo nas coordenadas do mapa.
+        /// </summary>
+        /// <param name="row">A linha no mapa.</param>
+        /// <param name="column">A coluna no mapa.</param>
+        public bool CheckTileInfo(int row, int column)
+        {
+            return infoIndexList.ContainsKey(new Point(row, column));
+        }
+
+        /// <summary>
+        /// Obtém os limites de um determinado Tile ao informar as coordenadas no mapa.
+        /// </summary>
+        /// <param name="row">A linha no mapa.</param>
+        /// <param name="column">A coluna no mapa.</param>
         public virtual Rectangle GetTileBounds(int row, int column)
         {
             int index = finalMap[row, column];
@@ -149,6 +175,26 @@ namespace MonoLink.Tiles
             tile.Color = info.Color;
 
             return tile.GetBounds();
+        }
+
+        /// <summary>
+        /// Obtém todas as coordenadas do mapa que contenham o específico valor.
+        /// </summary>
+        /// <param name="value">A valor a ser buscado em todo o mapa.</param>
+        public List<Point> GetAllCoord(int value)
+        {
+            List<Point> points = new List<Point>();
+
+            for(int i = 0; i < finalMap.GetLength(0); i++)
+            {
+                for(int j = 0; j < finalMap.GetLength(1); j++)
+                {
+                    if (finalMap[i, j] == value)
+                        points.Add(new Point(i, j));
+                }
+            }
+
+            return points;
         }
     }
 }

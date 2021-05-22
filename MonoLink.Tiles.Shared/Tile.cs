@@ -17,6 +17,8 @@ namespace MonoLink.Tiles
         public bool IsEnabled { get; set; } = true;
         public bool IsVisible { get; set; } = true;
 
+        /// <summary>Obtém ou define um valor opcional para o Tile.</summary>
+        public int Value { get; set; } = 0;
         /// <summary>Obtém ou define a posição.</summary>
         public Vector2 Position { get; set; } = Vector2.Zero;
         /// <summary>Obtém ou define a escala.</summary>
