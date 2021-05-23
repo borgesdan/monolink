@@ -14,34 +14,55 @@ namespace MonoLink.Input
         public Keys? DPadDown { get; set; } = null;
         public Keys? DPadRight { get; set; } = null;
         public Keys? DPadLeft { get; set; } = null;
-
         public Keys? X { get; set; } = null;
         public Keys? Y { get; set; } = null;
         public Keys? A { get; set; } = null;
         public Keys? B { get; set; } = null;
-
         public Keys? LeftTrigger { get; set; } = null;
         public Keys? RightTrigger { get; set; } = null;
-
         public Keys? LeftShoulder { get; set; } = null;
         public Keys? RightShoulder { get; set; } = null;
-
         public Keys? RightStick { get; set; } = null;
         public Keys? RightThumbStickUp { get; set; } = null;
         public Keys? RightThumbStickDown { get; set; } = null;
         public Keys? RightThumbStickRight { get; set; } = null;
         public Keys? RightThumbStickLeft { get; set; } = null;
-
         public Keys? LeftStick { get; set; } = null;
         public Keys? LeftThumbStickUp { get; set; } = null;
         public Keys? LeftThumbStickDown { get; set; } = null;
         public Keys? LeftThumbStickRight { get; set; } = null;
         public Keys? LeftThumbStickLeft { get; set; } = null;
-
         public Keys? Start { get; set; } = null;
         public Keys? Back { get; set; } = null;
-
         public Keys? BigButton { get; set; } = null;
+
+
+        /// <summary>
+        /// Obtém um mapeamento padrão da classe.
+        /// AXBY(NumPad4, NumPad5, NumPad6, NumPad0);
+        /// DPad(Up, Down, Right, Left)
+        /// RightStick(Q, W, S, D, A)
+        /// LeftStick(Y, U, J, K, H)
+        /// Shoulder(LeftShift, RightShift)
+        /// Trigger(LeftControl, RightControl)
+        /// StartBackBig(Enter, Escape, Home)
+        /// </summary>
+        public static KeyButtonMap Default 
+        {
+            get
+            {
+                KeyButtonMap map = new KeyButtonMap();
+                map.SetAXBY(Keys.NumPad4, Keys.NumPad5, Keys.NumPad6, Keys.NumPad0);                
+                map.SetDPad(Keys.Up, Keys.Down, Keys.Right, Keys.Left);
+                map.SetRightStick(Keys.Q, Keys.W, Keys.S, Keys.D, Keys.A);
+                map.SetLeftStick(Keys.Y, Keys.U, Keys.J, Keys.K, Keys.H);
+                map.SetShoulder(Keys.LeftShift, Keys.RightShift);
+                map.SetTrigger(Keys.LeftControl, Keys.RightControl);
+                map.SetStartBackBig(Keys.Enter, Keys.Escape, Keys.Home);
+
+                return map;
+            }
+        }
 
         /// <summary>Inicializa uma nova instância da classe.</summary>
         public KeyButtonMap() { }
