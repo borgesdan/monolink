@@ -20,9 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Animations\AdvancedAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animations\Animation2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animations\FrameAnimation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Clone.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Direction2D.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FrameCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HitFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDraw.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IUpdate.cs" />

@@ -11,8 +11,6 @@ namespace MonoLink.Screens
     /// </summary>
     public sealed class ScreenManager : IDisposable
     {
-        //------------- VARS ---------------//
-
         private bool disposed = false;
         private bool changed = false;
         private Screen standbyScreen = null;
@@ -21,11 +19,20 @@ namespace MonoLink.Screens
         /// <summary>Obtém a instância corrente da classe Game.</summary>
         public Game Game { get; private set; } = null;
         /// <summary>Obtém a tela ativa.</summary>
-        public Screen Active { get; private set; } = null;
+        public Screen CurrentScreen { get; private set; } = null;
         /// <summary>Obtém ou define se o gerenciador está habilitado a sofrer atualizações.</summary>
         public bool IsEnabled { get; set; } = true;
         /// <summary>Obtém ou define se o gerenciador está habilitado a desenhar as telas.</summary>
-        public bool IsVisible { get; set; } = true;        
+        public bool IsVisible { get; set; } = true;    
+        
+        /// <summary>
+        /// Inicializa uma nova instância da classe.
+        /// </summary>
+        /// <param name="game">A instância da classe Game.</param>
+        public ScreenManager(Game game)
+        {
+            Game = game;
+        }
 
         /// <summary>
         /// Atualiza o gerenciador de tela.
@@ -37,12 +44,12 @@ namespace MonoLink.Screens
             {
                 if (changed)
                 {
-                    Active = standbyScreen;
+                    CurrentScreen = standbyScreen;
                     changed = false;
                     standbyScreen = null;
                 }
 
-                Active?.Update(gameTime);
+                CurrentScreen?.Update(gameTime);
             }            
         }
 
@@ -53,9 +60,9 @@ namespace MonoLink.Screens
         /// <param name="spriteBatch">O objeto SpriteBatch para desenho.</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if(IsVisible)
+            if(IsVisible && CurrentScreen != null)
             {
-                Active?.Draw(gameTime, spriteBatch);
+                CurrentScreen?.Draw(gameTime, spriteBatch);
             }
         }            
 
@@ -80,9 +87,9 @@ namespace MonoLink.Screens
                 this.screens.Add(s);
                 s.Manager = this;
 
-                if (Active == null)
+                if (CurrentScreen == null)
                 {
-                    Active = s;
+                    CurrentScreen = s;
                 }
             }
         }
@@ -105,7 +112,7 @@ namespace MonoLink.Screens
         /// </param>
         public void Change(int index, bool reset)
         {
-            Screen old = Active;
+            Screen old = CurrentScreen;
             Screen finder = screens[index];
 
             changed = true;
@@ -134,7 +141,7 @@ namespace MonoLink.Screens
         /// <param name="reset">True se deseja que o gerenciador chame o método Reset() da tela atual.</param>
         public void Next(bool reset)
         {
-            int index = screens.FindIndex(x => x.Equals(Active));
+            int index = screens.FindIndex(x => x.Equals(CurrentScreen));
 
             if (index >= screens.Count - 1)
                 index = 0;
@@ -151,7 +158,7 @@ namespace MonoLink.Screens
         public void Back(bool reset)
         {
             //Voltar a tela.
-            int index = screens.FindIndex(x => x.Equals(Active));
+            int index = screens.FindIndex(x => x.Equals(CurrentScreen));
 
             if (index <= 0)
                 index = screens.Count - 1;
@@ -187,10 +194,11 @@ namespace MonoLink.Screens
             if (disposing)
             {
                 Game = null;
-                screens.Clear();
-                screens = null;
-                Active = null;
+                CurrentScreen = null;
                 standbyScreen = null;
+
+                foreach (var s in screens)
+                    s.Dispose();
             }                
 
             disposed = true;

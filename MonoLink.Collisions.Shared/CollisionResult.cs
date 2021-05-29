@@ -69,7 +69,12 @@ namespace MonoLink.Collisions
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(WillIntersect, Intersect, Subtract);
+            int hashCode = -742203883;
+            hashCode = hashCode * -1521134295 + WillIntersect.GetHashCode();
+            hashCode = hashCode * -1521134295 + Intersect.GetHashCode();
+            hashCode = hashCode * -1521134295 + Subtract.GetHashCode();
+
+            return hashCode;
         }
 
         public static bool operator ==(PolygonCollisionResult left, PolygonCollisionResult right)

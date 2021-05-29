@@ -31,8 +31,6 @@ namespace MonoLink.Screens
     /// </summary>
     /// <typeparam name="T">
     /// T é um tipo que implementa a interface IUpdateDraw.
-    /// Normalmente utiliza-se um tipo da classe Entity do namespace
-    /// MonoLink.Entity.
     /// </typeparam>
     public class BasicScreen<T> : Screen where T : IUpdateDraw
     {

@@ -4,8 +4,7 @@ using Microsoft.Xna.Framework;
 namespace MonoLink
 {
     /// <summary>
-    /// Representa um retângulo relativo a um TextureFrame que informa a posição e o tamanho
-    /// de uma caixa de colisão.
+    /// Representa um frame que específica uma caixa de colisão.
     /// </summary>
     public struct HitFrame : IEquatable<HitFrame>
     {

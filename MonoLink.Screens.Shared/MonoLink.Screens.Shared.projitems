@@ -17,8 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BasicScreen.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Layers\InfinityLayer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Layers\ScreenLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenManager.cs" />
   </ItemGroup>

@@ -4,8 +4,7 @@ using Microsoft.Xna.Framework;
 namespace MonoLink
 {
     /// <summary>
-    /// Representa um retângulo que informa uma parte específica (ou região)
-    /// de uma textura (ou imagem) que pode representar uma ação, tile ou outro tipo de informação.
+    /// Representa um retângulo que informa uma parte específica (ou região) de um Texture2D.
     /// </summary>
     public struct SpriteFrame : IEquatable<SpriteFrame>
     {
@@ -19,15 +18,15 @@ namespace MonoLink
         public int Width;
         /// <summary>A altura do frame.</summary>
         public int Height;
-        /// <summary>Valor de correção para alinhamento deste recorte em uma animação, no eixo X, caso necessário.</summary>
-        public float AlignX;
-        /// <summary>Valor de correção para alinhamento deste deste recorte em uma animação, no eixo Y, caso necessário.</summary>
-        public float AlignY;
+        /// <summary>Valor da origem deste recorte no eixo X, caso necessário.</summary>
+        public float OriginX;
+        /// <summary>Valor da origem deste deste recorte no eixo Y, caso necessário.</summary>
+        public float OriginY;
 
-        /// <summary>Obtém um retângulo com a posição e tamanho do frame dentro do SpriteSheet.</summary>
+        /// <summary>Obtém os limites do frame.</summary>
         public Rectangle Bounds { get => new Rectangle(X, Y, Width, Height); }
-        /// <summary>Obtém um vetor com os valores do alinhamento.</summary>
-        public Vector2 Align { get => new Vector2(AlignX, AlignY); }
+        /// <summary>Obtém a origem do frame.</summary>
+        public Vector2 Origin { get => new Vector2(OriginX, OriginY); }
         /// <summary>Obtém um SpriteFrame vazio.</summary>
         public static SpriteFrame Empty { get => new SpriteFrame(Rectangle.Empty, Vector2.Zero); }
 
@@ -40,31 +39,24 @@ namespace MonoLink
         /// <param name="y">A posição no eixo Y do recorte na Textura.</param>
         /// <param name="width">A largura do recorte.</param>
         /// <param name="height">A altura do recorte.</param>
-        /// <param name="alignX">Valor de correção para alinhamento deste recorte em uma série de recortes de uma animação no eixo X, caso necessário.</param>
-        /// <param name="alignY">Valor de correção para alinhamento deste recorte em uma série de recortes de uma animação no eixo Y, caso necessário.</param>
-        public SpriteFrame(int x, int y, int width, int height, float alignX = 0, float alignY = 0)
-        {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
-            AlignX = alignX;
-            AlignY = alignY;
-        }
+        /// <param name="originX">Valor da origem deste recorte no eixo X, caso necessário.</param>
+        /// <param name="originY">Valor da origem deste deste recorte no eixo Y, caso necessário.</param>
+        public SpriteFrame(int x, int y, int width, int height, float originX = 0, float originY = 0) 
+            : this(new Rectangle(x, y, width, height), new Vector2(originX, originY)) { }
 
         /// <summary>
-        /// Cria um novo objeto SpriteFrame;
+        /// Cria um novo objeto SpriteFrame.
         /// </summary>
         /// <param name="rectangle">O objeto Rectangle a ser utilizado.</param>
-        /// <param name="align">Um vetor com o alinhamento para correção em animações, caso necessário.</param>
+        /// <param name="align">Define a origem do frame, se necessário.</param>
         public SpriteFrame(Rectangle rectangle, Vector2 align)
         {
             X = rectangle.X;
             Y = rectangle.Y;
             Width = rectangle.Width;
             Height = rectangle.Height;
-            AlignX = align.X;
-            AlignY = align.Y;
+            OriginX = align.X;
+            OriginY = align.Y;
         }
 
         //--------------- METHODS ----------------//
@@ -80,8 +72,8 @@ namespace MonoLink
                    Y == other.Y &&
                    Width == other.Width &&
                    Height == other.Height &&
-                   AlignX == other.AlignX &&
-                   AlignY == other.AlignY;
+                   OriginX == other.OriginX &&
+                   OriginY == other.OriginY;
         }
 
         public override int GetHashCode()
@@ -91,8 +83,8 @@ namespace MonoLink
             hashCode = hashCode * -1521134295 + Y.GetHashCode();
             hashCode = hashCode * -1521134295 + Width.GetHashCode();
             hashCode = hashCode * -1521134295 + Height.GetHashCode();
-            hashCode = hashCode * -1521134295 + AlignX.GetHashCode();
-            hashCode = hashCode * -1521134295 + AlignY.GetHashCode();
+            hashCode = hashCode * -1521134295 + OriginX.GetHashCode();
+            hashCode = hashCode * -1521134295 + OriginY.GetHashCode();
             return hashCode;
         }
         

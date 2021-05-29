@@ -11,7 +11,7 @@ namespace MonoLink.Tiles
         /// <summary>
         /// Obtém a textura do tile.
         /// </summary>
-        public Texture2D Texture { get; } = null;
+        private Texture2D Texture { get; } = null;
         /// <summary>
         /// Obtém ou define o frame a ser utilizado da textura.
         /// </summary>
@@ -58,17 +58,17 @@ namespace MonoLink.Tiles
                 position: Position,
                 sourceRectangle: Frame,
                 color: Color,
-                rotation: Rotation,
+                rotation: 0,
                 origin: Origin,
                 scale: Scale,
                 effects: Effects,
-                layerDepth: LayerDepth
+                layerDepth: 0
                 );
         }
 
         public override Rectangle GetBounds()
         {
-            return GameHelper.GetBounds(new Transform(Position, Vector2.Zero, Scale, Rotation),
+            return GameHelper.GetBounds(new Transform(Position, Vector2.Zero, Scale, 0),
                 Frame.HasValue ? Frame.Value.Width : Texture.Width,
                 Frame.HasValue ? Frame.Value.Height : Texture.Height,
                 Origin);

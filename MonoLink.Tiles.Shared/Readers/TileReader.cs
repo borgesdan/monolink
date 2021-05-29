@@ -7,11 +7,11 @@ namespace MonoLink.Tiles
     /// <summary>
     /// Classe abstrada que desenha tiles na tela através de um array bidimensional de inteiros.
     /// </summary>
-    public abstract class TileReader
+    public abstract class TileReader : ITileReader
     {
         protected int[,] finalMap = null;
         //O estilo do tyle, se retângular ou isometrico
-        protected TileStyle tileType = TileStyle.Rectangle;
+        protected TileStyle tileStyle = TileStyle.Rectangle;
         //Obtém as informações necessárias para o desenho de cada tile
         protected readonly List<TileInfo> infoList = new List<TileInfo>();
         //Obtém o index do tileinfo na var infoList informando a linha e a coluna do mapa
@@ -22,6 +22,10 @@ namespace MonoLink.Tiles
         public List<TileInfo> TileInfos { get => infoList; }
         /// <summary>Obtém ou define a posição inicial para o cálculo de ordenação dos tiles.</summary>
         public Vector2 StartPosition { get; set; } = Vector2.Zero;
+        /// <summary>Obtém ou define a escala.</summary>
+        public Vector2 Scale { get; set; } = Vector2.One;
+        /// <summary>Obtém ou define a origem do desenho e da rotação.</summary>
+        public Vector2 Origin { get; set; } = Vector2.Zero;
 
         /// <summary>Obtém se o método Read() leu todo seu conteúdo e chegou ao fim.</summary>
         public bool IsRead { get; protected set; } = false;
@@ -32,14 +36,28 @@ namespace MonoLink.Tiles
         /// <summary>Obtém ou define a tabela de índices com seus respectivos Tiles.</summary>
         public Dictionary<int, Tile> Table { get; protected set; } = new Dictionary<int, Tile>();
 
-        protected TileReader(Dictionary<int, Tile> table, int tileWidth, int tileHeight)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="map">O array que representa o mapa do jogo.</param>
+        /// <param name="table">A tabela número-tile.</param>        
+        /// <param name="style">O estilo do tile a ser desenhado na tela.</param>
+        /// <param name="tileWidth">A largura dos tiles.</param>
+        /// <param name="tileHeight">A altura dos tiles.</param>
+        public TileReader(int[,] map, Dictionary<int, Tile> table, TileStyle style, int tileWidth, int tileHeight)
         {
+            finalMap = map;
+            tileStyle = style;
             TileWidth = tileWidth;
             TileHeight = tileHeight;
             Table = table;
         }
 
-        protected TileReader(TileReader source)
+        /// <summary>
+        /// Inicializa uma nova instância da classe como cópia de outra instância.
+        /// </summary>
+        /// <param name="source">A instância a ser copiada.</param>
+        public TileReader(TileReader source)
         {
             this.finalMap = (int[,])source.finalMap.Clone();
             this.IsRead = source.IsRead;
@@ -48,9 +66,95 @@ namespace MonoLink.Tiles
             this.Table = source.Table;
         }
 
-        public abstract void Read();
-        public abstract void Update(GameTime gameTime);
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        /// <summary>
+        /// Lê o array contido no mapa e ordena as posições dos tiles.
+        /// </summary>
+        public virtual void Read() 
+        {
+            IsRead = false;
+
+            //dimensões do array
+            int d0 = finalMap.GetLength(0);
+            int d1 = finalMap.GetLength(1);
+
+            for (int row = 0; row < d0; row++)
+            {
+                for (int col = 0; col < d1; col++)
+                {
+                    //O valor da posição no array
+                    int index = finalMap[row, col];
+
+                    if (Table.ContainsKey(index))
+                    {
+                        int w = TileWidth;
+                        int h = TileHeight;
+                        float sx = StartPosition.X;
+                        float sy = StartPosition.Y;
+
+                        float x, y;
+
+                        if (tileStyle == TileStyle.Rectangle)
+                        {
+                            x = (w * col) + sx;
+                            y = (h * row) + sy;
+                        }
+                        else
+                        {
+                            x = ((w / 2) * -row) + ((w / 2) * col) + sx;
+                            y = ((h / 2) * col) - ((h / 2) * -row) + sy;
+                        }
+
+                        //Conserto da posição com relação a origem.
+                        x += Origin.X;
+                        y += Origin.Y;
+
+                        x *= Scale.X;
+                        y *= Scale.Y;
+
+                        TileInfo info;                        
+                        info.Value = index;
+                        info.Position = new Vector2(x, y);
+                        info.Color = Color.White;
+                        info.Effects = SpriteEffects.None;
+                        info.Scale = Scale;
+
+                        infoList.Add(info);
+                        infoIndexList.Add(new Point(row, col), infoList.Count - 1);
+                    }
+                }
+            }
+
+            IsRead = true;
+        }
+
+        /// <summary>
+        /// Atualiza todos os tiles contidos na propriedade Table.
+        /// </summary>
+        /// <param name="gameTime">Obtém acesso ao tempo de jogo.</param>
+        public virtual void Update(GameTime gameTime)
+        {
+            foreach (var t in Table.Values)
+                t.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Desenha os tiles na tela.
+        /// </summary>
+        /// <param name="gameTime">Obtém acesso ao tempo de jogo.</param>
+        /// <param name="spriteBatch">Obtém acesso ao SpriteBatch.</param>
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < infoList.Count; i++)
+            {
+                var tile = Table[infoList[i].Value];
+                tile.Position = infoList[i].Position;
+                tile.Color = infoList[i].Color;
+                tile.Scale = infoList[i].Scale;
+                tile.Effects = infoList[i].Effects;
+                tile.Origin = Origin;
+                tile.Draw(gameTime, spriteBatch);
+            }
+        }
 
         /// <summary>
         /// Obtém o valor da coordenada no mapa.

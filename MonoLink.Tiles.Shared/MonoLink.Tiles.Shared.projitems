@@ -23,7 +23,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)TexturedTile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TileInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Readers\TileMapReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Readers\TileSectorReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TileStyle.cs" />
   </ItemGroup>

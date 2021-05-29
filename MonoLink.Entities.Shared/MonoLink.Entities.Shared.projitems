@@ -17,6 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Entity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)StaticTextureEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity2D.cs" />
   </ItemGroup>
 </Project>

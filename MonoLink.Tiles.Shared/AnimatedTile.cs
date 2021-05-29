@@ -38,7 +38,7 @@ namespace MonoLink.Tiles
             Animation.Color = this.Color;
             Animation.Effects = this.Effects;
             Animation.Origin = this.Origin;
-            Animation.Rotation = this.Rotation;
+            //Animation.Rotation = this.Rotation;
             Animation.Scale = this.Scale;
             
             Animation.Update(gameTime);

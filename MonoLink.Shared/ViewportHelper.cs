@@ -1,36 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace MonoLink
 {
     /// <summary>
     /// Providência acesso a métodos de auxílio para conferência da Viewport desejada.
     /// </summary>
-    public class ViewportHelper
+    public static class ViewportHelper
     {
         /// <summary>
-        /// Verifica se os limites de um ator de jogo se encontram dentro da Viewport.
+        /// Verifica se os limites de um objeto de jogo se encontram dentro da Viewport.
         /// </summary>
-        /// <param name="viewport">A tela de visão desejada.</param>
-        /// <param name="actorBounds">Os limites do ator.</param>
-        public static bool CheckFieldOfView(Viewport viewport, Rectangle actorBounds)
+        /// <param name="viewport">A viewport de referência.</param>
+        /// <param name="bounds">Os limites do objeto de jogo.</param>
+        public static bool CheckFieldOfView(Viewport viewport, Rectangle bounds)
         {
-            return actorBounds.Intersects(viewport.Bounds);
+            return bounds.Intersects(viewport.Bounds);
         }
 
-        /// <summary>Obtém a posição de um ator de jogo ao definir o alinhamento relativo aos limites da viewport.</summary>   
+        /// <summary>Obtém a posição de um objeto de jogo ao definir o alinhamento relativo aos limites da viewport.</summary>   
         /// <param name="viewport">A tela de visão para cálculo.</param>
-        /// <param name="actorSize">O tamanho do ator.</param>
+        /// <param name="size">O tamanho do objeto de jogo.</param>
         /// <param name="align">O tipo de alinhamento.</param>
-        public static Vector2 GetAlign(Viewport viewport, Point actorSize, AlignType align)
+        public static Vector2 GetAlign(Viewport viewport, Point size, AlignType align)
         {
             int viewWidth = viewport.Width;
             int viewHeight = viewport.Height;
-            int actorWidth = actorSize.X;
-            int actorHeight = actorSize.Y;
+            int actorWidth = size.X;
+            int actorHeight = size.Y;
 
             Vector2 tempPosition = Vector2.Zero;
 

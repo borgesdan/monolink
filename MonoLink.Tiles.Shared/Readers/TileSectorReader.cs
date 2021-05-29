@@ -21,17 +21,14 @@ namespace MonoLink.Tiles
         /// </summary>        
         /// <param name="sectors">Um array de arrays que representa um mapa com seus setores</param>
         /// <param name="table">A tabela número-tile.</param>        
-        /// <param name="type">O estilo do tile a ser desenhado na tela.</param>
+        /// <param name="style">O estilo do tile a ser desenhado na tela.</param>
         /// <param name="tileWidth">A largura dos tiles.</param>
         /// <param name="tileHeight">A altura dos tiles.</param>
         /// <param name="rows">A quantidade de linhas de cada array que representa os setores de um mapa.</param>
         /// <param name="columns">A quantidade de colunas de cada array que representa os setores de um mapa.</param>        
-        public TileSectorReader(int[,][,] sectors, Dictionary<int, Tile> table, TileStyle type, int tileWidth, int tileHeight, int rows, int columns) : base(table, tileWidth, tileHeight)
+        public TileSectorReader(int[,][,] sectors, Dictionary<int, Tile> table, TileStyle style, int tileWidth, int tileHeight, int rows, int columns) : base(null, table, style, tileWidth, tileHeight)
         {
             this.sectors = sectors;
-
-            tileType = type;
-
             Rows = rows;
             Columns = columns;
         }
@@ -125,67 +122,68 @@ namespace MonoLink.Tiles
                 }
             }
 
-            ReadFinalMap();
+            //ReadFinalMap();
+            base.Read();
         }
 
-        private void ReadFinalMap()
-        {
-            IsRead = false;
+        //private void ReadFinalMap()
+        //{
+        //    IsRead = false;
 
-            //dimensões do array
-            int d0 = finalMap.GetLength(0);
-            int d1 = finalMap.GetLength(1);
+        //    //dimensões do array
+        //    int d0 = finalMap.GetLength(0);
+        //    int d1 = finalMap.GetLength(1);
 
-            for (int row = 0; row < d0; row++)
-            {
-                for (int col = 0; col < d1; col++)
-                {
-                    //O valor da posição no array
-                    int index = finalMap[row, col];
-                    //Recebe o Tile da tabela
-                    //Dictionary<int, Tile> table = point_sector[new Point(row, col)].Table;
+        //    for (int row = 0; row < d0; row++)
+        //    {
+        //        for (int col = 0; col < d1; col++)
+        //        {
+        //            //O valor da posição no array
+        //            int index = finalMap[row, col];
+        //            //Recebe o Tile da tabela
+        //            //Dictionary<int, Tile> table = point_sector[new Point(row, col)].Table;
 
-                    if (Table.ContainsKey(index))
-                    {
-                        int w = TileWidth;
-                        int h = TileHeight;
-                        float sx = StartPosition.X;
-                        float sy = StartPosition.Y;
+        //            if (Table.ContainsKey(index))
+        //            {
+        //                int w = TileWidth;
+        //                int h = TileHeight;
+        //                float sx = StartPosition.X;
+        //                float sy = StartPosition.Y;
 
-                        float x, y;
+        //                float x, y;
 
-                        if (tileType == TileStyle.Rectangle)
-                        {
-                            x = (w * col) + sx;
-                            y = (h * row) + sy;
-                        }
-                        else
-                        {
-                            x = ((w / 2) * -row) + ((w / 2) * col) + sx;
-                            y = ((h / 2) * col) - ((h / 2) * -row) + sy;
-                        }
+        //                if (tileStyle == TileStyle.Rectangle)
+        //                {
+        //                    x = (w * col) + sx;
+        //                    y = (h * row) + sy;
+        //                }
+        //                else
+        //                {
+        //                    x = ((w / 2) * -row) + ((w / 2) * col) + sx;
+        //                    y = ((h / 2) * col) - ((h / 2) * -row) + sy;
+        //                }
 
-                        //Conserto da posição com relação a origem.
-                        x += Table[index].Origin.X;
-                        y += Table[index].Origin.Y;
+        //                //Conserto da posição com relação a origem.
+        //                x += Table[index].Origin.X;
+        //                y += Table[index].Origin.Y;
 
-                        x *= Table[index].Scale.X;
-                        y *= Table[index].Scale.Y;
+        //                x *= Table[index].Scale.X;
+        //                y *= Table[index].Scale.Y;
 
-                        TileInfo info;
-                        info.Position = new Vector2(x, y);
-                        info.Value = index;
-                        info.Color = Color.White;
+        //                TileInfo info;
+        //                info.Position = new Vector2(x, y);
+        //                info.Value = index;
+        //                info.Color = Color.White;
 
-                        infoList.Add(info);
+        //                infoList.Add(info);
 
-                        infoIndexList.Add(new Point(row, col), infoList.Count - 1);
-                    }
-                }
-            }
+        //                infoIndexList.Add(new Point(row, col), infoList.Count - 1);
+        //            }
+        //        }
+        //    }
 
-            IsRead = true;
-        }
+        //    IsRead = true;
+        //}
 
         /// <summary>
         /// Obtém as coordenadas no mapa final informando a linha e a coluna do setor.
@@ -285,32 +283,6 @@ namespace MonoLink.Tiles
         {
             Point p = GetCoord(sector, row, column);
             return CheckTileInfo(p.X, p.Y);
-        }
-
-        /// <summary>
-        /// Atualiza todos os tiles contidos na propriedade Table.
-        /// </summary>
-        /// <param name="gameTime">Obtém acesso ao tempo de jogo.</param>
-        public override void Update(GameTime gameTime)
-        {
-            foreach (var t in Table.Values)
-                t.Update(gameTime);
-        }
-
-        /// <summary>
-        /// Desenha os tiles na tela.
-        /// </summary>
-        /// <param name="gameTime">Obtém acesso ao tempo de jogo.</param>
-        /// <param name="spriteBatch">Obtém acesso ao SpriteBatch.</param>
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            for (int i = 0; i < infoList.Count; i++)
-            {
-                var tile = Table[infoList[i].Value];
-                tile.Position = infoList[i].Position;
-                tile.Color = infoList[i].Color;
-                tile.Draw(gameTime, spriteBatch);
-            }
-        }
+        }        
     }
 }

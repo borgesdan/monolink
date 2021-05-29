@@ -1,14 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System;
 
 namespace MonoLink
 {
     /// <summary>
     /// Representa um objeto de jogo que contém uma textura e seus frames.
     /// </summary>
-    public sealed class SpriteSheet
+    public sealed class SpriteSheet : IDisposable
     {
-        //------------- CONSTRUCTOR ---------------//
+        bool disposed = false;
 
         /// <summary>
         /// A textura que representa o sprite sheet.
@@ -18,7 +20,7 @@ namespace MonoLink
         /// Obtém ou define os frames da textura. Frames são retângulos que informam partes específicas (ou regiões)
         /// da textura que representam ações, tiles ou outro tipo de informação.
         /// </summary>
-        public List<FrameCollection> Frames { get; set; } = new List<FrameCollection>();          
+        public List<SpriteFrame> Frames { get; set; } = new List<SpriteFrame>();          
         /// <summary>
         /// Obtém true caso a lista de Frames não esteja vazia.
         /// </summary>
@@ -29,12 +31,10 @@ namespace MonoLink
         /// </summary>
         /// <param name="texture">A textura que representa uma imagem.</param>
         /// <param name="frames">Define os frames da textura.</param>
-        public SpriteSheet(Texture2D texture, params FrameCollection[] frames)
+        public SpriteSheet(Texture2D texture, List<SpriteFrame> frames)
         {
             Texture = texture;
-
-            if (frames != null)
-                Frames.AddRange(frames);
+            Frames = frames;
         }
 
         /// <summary>
@@ -47,45 +47,27 @@ namespace MonoLink
 
             for (int i = 0; i < source.Frames.Count; i++)
             {
-                this.Frames.Add(new FrameCollection(source.Frames[i]));
+                this.Frames.Add(source.Frames[i]);
             }
         }
-
-        //------------- METHODS ---------------//        
         
-        /// <summary>
-        /// Adiciona uma coleção de frames
-        /// </summary>        
-        public SpriteSheet Add(FrameCollection collection)
+        public void Dispose()
         {
-            Frames.Add(collection);
-            return this;
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Adiciona lista de coleção de frames.
-        /// </summary>
-        public SpriteSheet AddRange(params FrameCollection[] collections)
+        void Dispose(bool disposing)
         {
-            if(collections != null)
-                Frames.AddRange(collections);
+            if (disposed)
+                return;
 
-            return this;
-        }
-
-        /// <summary>
-        /// Obtém uma lista com todos os SpriteFrames da textutra.
-        /// </summary>        
-        public List<SpriteFrame> GetSpriteFrames()
-        {
-            List<SpriteFrame> f = new List<SpriteFrame>();
-
-            for(int i = 0; i < Frames.Count; i++)
+            if(disposing)
             {
-                f.Add(Frames[i].Frame);
+                Texture.Dispose();                
             }
 
-            return f;
-        }        
+            disposed = true;
+        }
     }
 }

@@ -50,20 +50,7 @@ namespace MonoLink
             {
                 this.Frames.Add(source.Frames[i]);
             }
-        }
-
-        /// <summary>
-        /// Inicializa uma nova instância da classe.
-        /// </summary>
-        /// <param name="time">O tempo de exibição de cada textura.</param>
-        /// <param name="name">O nome da animação.</param>
-        /// <param name="texture">A textura a ser carregada</param>
-        /// <param name="frames">A lista de frames da textura.</param>
-        public FrameAnimation(int time, string name, Texture2D texture, SpriteFrame[] frames) : base(time, name)
-        {
-            Texture = texture;
-            Frames = new List<SpriteFrame>(frames);
-        }
+        }        
 
         /// <summary>
         /// Inicializa uma nova instância da classe.
@@ -127,7 +114,7 @@ namespace MonoLink
                        sourceRectangle: source,
                        color: Color,
                        rotation: Rotation,
-                       origin: Origin + CurrentFrame.Align,
+                       origin: Origin + CurrentFrame.Origin,
                        scale: Scale,
                        effects: Effects,
                        layerDepth: LayerDepth
@@ -139,7 +126,7 @@ namespace MonoLink
         public override Rectangle GetBounds()
         {
             Transform transform = new Transform(Position, Vector2.Zero, Scale, Rotation);
-            return GameHelper.GetBounds(transform, CurrentFrame.Width, CurrentFrame.Height, Origin + CurrentFrame.Align);
+            return GameHelper.GetBounds(transform, CurrentFrame.Width, CurrentFrame.Height, Origin + CurrentFrame.Origin);
         }
 
         public override void Reset()

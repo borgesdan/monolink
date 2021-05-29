@@ -11,11 +11,6 @@ namespace MonoLink.Entities
     {
         bool disposed = false;
 
-        /// <summary>Obtém os limites 2D da entidade, se disponível.</summary>
-        public virtual Rectangle Bounds2D { get => Rectangle.Empty; }
-        /// <summary>Obtém os limites 3D da entidade, se disponível.</summary>
-        public virtual BoundingBox Bounds3D { get => new BoundingBox(); }
-
         /// <summary>Obtém ou define o nome da entidade que pode ser utilizado como critério de busca.</summary>
         public string Name { get; set; } = string.Empty;
         /// <summary>Obtém a instância corrente da classe Game.</summary>
@@ -25,16 +20,7 @@ namespace MonoLink.Entities
         /// <summary>Obtém ou define se a entidade está habilitada a ser desenhada na tela.</summary>
         public bool IsVisible { get; set; } = true;
         /// <summary>Obtém ou define as transformações de posição, escala e rotação da entidade.</summary>
-        public Transform Transform { get; set; } = new Transform();
-
-        /// <summary>Obtém ou define a origem de uma entidade 2D.</summary>
-        public Vector2 Origin = Vector2.Zero;
-        /// <summary>Obtém ou define os efeitos de flip de uma entidade 2D.</summary>
-        public SpriteEffects SpriteEffects { get; set; } = SpriteEffects.None;
-        /// <summary>Obtém ou define a cor de desenho de uma entidade 2D.</summary>
-        public Color Color { get; set; } = Color.White;
-        /// <summary>Obtém ou define a profundidade de desenho de uma entidade 2D.</summary>
-        public float LayerDepth { get; set; } = 0;
+        public Transform Transform { get; set; } = new Transform();        
 
         /// <summary>Encapsula métodos a serem chamados no fim do método Update.</summary>
         public event Action<Entity, GameTime> OnUpdateEvent;
@@ -62,13 +48,7 @@ namespace MonoLink.Entities
             this.Game = source.Game;
             this.IsEnabled = source.IsEnabled;
             this.IsVisible = source.IsVisible;
-            this.Transform = new Transform(source.Transform);
-
-            this.Origin = source.Origin;
-            this.Color = source.Color;
-            this.SpriteEffects = source.SpriteEffects;
-            this.LayerDepth = source.LayerDepth;
-
+            this.Transform = new Transform(source.Transform);  
             this.OnUpdateEvent = source.OnUpdateEvent;
             this.OnUpdateEvent = source.OnUpdateEvent;
         }
@@ -112,17 +92,20 @@ namespace MonoLink.Entities
 
         void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
+                return;
+
+            if (disposing)
             {
                 if (disposing)
                 {
                     Transform = null;
                     Name = null;
                     Game = null;
-                }
-
-                disposed = true;
+                }                
             }
+
+            disposed = true;
         }
     }
 }

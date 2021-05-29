@@ -51,7 +51,7 @@ namespace MonoLink
             {
                 if (CurrentTexture != null)
                 {
-                    List<SpriteFrame> frames = Sprites[textureIndex].GetSpriteFrames();
+                    List<SpriteFrame> frames = Sprites[textureIndex].Frames;
                     return frames[frameIndex];
                 }
                 else
@@ -62,44 +62,6 @@ namespace MonoLink
         /// <summary>Obtém a textura ativa.</summary>
         public Texture2D CurrentTexture { get; private set; } = null;
 
-        /// <summary>Obtém os hitframes ativos da textura.</summary>
-        public List<HitFrame> CurrentHitFrames 
-        {
-            get
-            {
-                if(CurrentTexture != null && Sprites[CurrentTextureIndex].HasFrames)
-                {
-                    return Sprites[CurrentTextureIndex].Frames[CurrentFrameIndex].HitFrames;
-                }
-
-                return new List<HitFrame>();
-            }
-        }
-
-        /// <summary>
-        /// Obtém os hitframes ativos da textura relativos ao tamanho da propriedade Bounds.
-        /// </summary>
-        public List<HitFrame> CurrentRelativeHitFrames
-        {
-            get
-            {
-                List<HitFrame> hFrames = new List<HitFrame>();
-
-                if (CurrentTexture != null && CurrentHitFrames.Count != 0)
-                {
-                    FrameCollection collection = Sprites[CurrentTextureIndex].Frames[CurrentFrameIndex];                    
-
-                    for(int i = 0; i < CurrentHitFrames.Count; i++)
-                    {
-                        HitFrame hRelative = collection.GetRelativeHitFrame(i, GetBounds(), Scale, Effects);                        
-                        hFrames.Add(hRelative);
-                    }                    
-                }
-
-                return hFrames;
-            }
-        }
-
         /// <summary>Obtém o tempo total da animação.</summary>
         public override TimeSpan TotalTime
         {
@@ -109,7 +71,7 @@ namespace MonoLink
 
                 foreach (SpriteSheet it in Sprites)
                 {
-                    frames += it.GetSpriteFrames().Count;
+                    frames += it.Frames.Count;
                 }
 
                 int m = Time * frames;
@@ -117,31 +79,7 @@ namespace MonoLink
             }
         }
 
-        public override TimeSpan ElapsedTime => new TimeSpan(0, 0, 0, 0, elapsedAnimationTime);
-
-        ///// <summary>Obtém o tempo que já se passou da animação.</summary>
-        //public override TimeSpan ElapsedTime
-        //{
-        //    get
-        //    {
-        //        int count = 0;
-
-        //        for (int i = 0; i <= CurrentTextureIndex; i++)
-        //        {
-        //            var frames = Sprites[i].GetTextureFrames();
-        //            for (int f = 0; f <= frames.Count - 1; f++)
-        //            {
-        //                if (i == CurrentTextureIndex && f > CurrentFrameIndex)
-        //                    break;
-
-        //                count++;
-        //            }
-        //        }
-
-        //        var m = Time * count;
-        //        return new TimeSpan(0, 0, 0, 0, m);
-        //    }
-        //}
+        public override TimeSpan ElapsedTime => new TimeSpan(0, 0, 0, 0, elapsedAnimationTime);        
 
         //------------- EVENTS ---------------//
 
@@ -194,12 +132,10 @@ namespace MonoLink
                 if (Sprites.Count > 0 && Time > 0)
                 {
                     if (CurrentTexture == null)
-                        CurrentTexture = Sprites[0].Texture;
-
-                    int framesCount = Sprites[CurrentTextureIndex].GetSpriteFrames().Count;
+                        CurrentTexture = Sprites[0].Texture;                    
                     
                     //Não continua caso não tenha frames a serem processados.
-                    if (framesCount <= 0)
+                    if (!Sprites[CurrentTextureIndex].HasFrames)
                         return;
 
                     //Tempo total da animação
@@ -210,7 +146,7 @@ namespace MonoLink
                     if (elapsedGameTime > Time)
                     {
                         //Verifica se o index do frame atual, é maior que a quantidade de frames da textura ativa.
-                        if (CurrentFrameIndex >= framesCount - 1)
+                        if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].Frames.Count - 1)
                         {
                             //Se sim, é hora de pular de sprite ou voltar para o primeiro frame,
                             //Caso só tenhamos uma sprite
@@ -252,7 +188,7 @@ namespace MonoLink
             {
                 if (CurrentTexture != null)
                 {
-                    Vector2 finalOrigin = Origin + Sprites[CurrentTextureIndex].GetSpriteFrames()[CurrentFrameIndex].Align;
+                    Vector2 finalOrigin = Origin + Sprites[CurrentTextureIndex].Frames[CurrentFrameIndex].Origin;
 
                     spriteBatch.Draw(
                        texture: CurrentTexture,
@@ -286,7 +222,7 @@ namespace MonoLink
         {
             CurrentFrameIndex++;
 
-            if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].GetSpriteFrames().Count - 1)
+            if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].Frames.Count - 1)
                 CurrentFrameIndex = 0;
         }
 
@@ -332,26 +268,7 @@ namespace MonoLink
         {
             if (CurrentTexture != null)
             {
-                //// Posição
-                //int x = (int)Position.X;
-                //int y = (int)Position.Y;
-                ////Escala
-                //float sx = Scale.X;
-                //float sy = Scale.Y;
-                ////Origem
-                //float ox = Origin.X;
-                //float oy = Origin.Y;
-
-                Vector2 frameOrigin = Sprites[CurrentTextureIndex].GetSpriteFrames()[CurrentFrameIndex].Align;
-
-                ////Obtém uma matrix: -origin * escala * posição (excluíndo a rotação)
-                //Matrix m = Matrix.CreateTranslation(-ox + -frameOrigin.X, -oy + -frameOrigin.Y, 0)
-                //    * Matrix.CreateScale(sx, sy, 1)
-                //    * Matrix.CreateTranslation(x, y, 0);
-
-                ////Os limites finais
-                //Rectangle rectangle = new Rectangle((int)m.Translation.X, (int)m.Translation.Y, (int)(CurrentFrame.Width * sx), (int)(CurrentFrame.Height * sy));
-                //return rectangle;
+                Vector2 frameOrigin = Sprites[CurrentTextureIndex].Frames[CurrentFrameIndex].Origin;
 
                 Transform transform = new Transform(Position, Vector2.Zero, Scale, Rotation);
                 return GameHelper.GetBounds(transform, CurrentFrame.Width, CurrentFrame.Height, Origin + frameOrigin);
