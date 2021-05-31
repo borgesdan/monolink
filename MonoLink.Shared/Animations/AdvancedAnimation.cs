@@ -122,87 +122,81 @@ namespace MonoLink
 
         //------------- METHODS ---------------//
 
-        public override void Update(GameTime gameTime)
+        public override void OnUpdate(GameTime gameTime)
         {
-            if (IsEnabled)
+            IsFinished = false;
+
+            //Verifica se existem texturas.
+            if (Sprites.Count > 0 && Time > 0)
             {
-                IsFinished = false;
+                if (CurrentTexture == null)
+                    CurrentTexture = Sprites[0].Texture;
 
-                //Verifica se existem texturas.
-                if (Sprites.Count > 0 && Time > 0)
+                //Não continua caso não tenha frames a serem processados.
+                if (!Sprites[CurrentTextureIndex].HasFrames)
+                    return;
+
+                //Tempo total da animação
+                elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
+                //Tempo que já se passou desde a última troca de textura.
+                elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
+
+                if (elapsedGameTime > Time)
                 {
-                    if (CurrentTexture == null)
-                        CurrentTexture = Sprites[0].Texture;                    
-                    
-                    //Não continua caso não tenha frames a serem processados.
-                    if (!Sprites[CurrentTextureIndex].HasFrames)
-                        return;
-
-                    //Tempo total da animação
-                    elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
-                    //Tempo que já se passou desde a última troca de textura.
-                    elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
-
-                    if (elapsedGameTime > Time)
+                    //Verifica se o index do frame atual, é maior que a quantidade de frames da textura ativa.
+                    if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].Frames.Count - 1)
                     {
-                        //Verifica se o index do frame atual, é maior que a quantidade de frames da textura ativa.
-                        if (CurrentFrameIndex >= Sprites[CurrentTextureIndex].Frames.Count - 1)
+                        //Se sim, é hora de pular de sprite ou voltar para o primeiro frame,
+                        //Caso só tenhamos uma sprite
+                        if (CurrentTextureIndex >= Sprites.Count - 1)
                         {
-                            //Se sim, é hora de pular de sprite ou voltar para o primeiro frame,
-                            //Caso só tenhamos uma sprite
-                            if (CurrentTextureIndex >= Sprites.Count - 1)
-                            {
-                                CurrentTextureIndex = 0;
-                                IsFinished = true;
-                                elapsedAnimationTime = 0;
-                            }
-                            else
-                            {
-                                CurrentTextureIndex++;
-                            }
-
-                            CurrentFrameIndex = 0;
+                            CurrentTextureIndex = 0;
+                            IsFinished = true;
+                            elapsedAnimationTime = 0;
                         }
                         else
                         {
-                            CurrentFrameIndex++;
+                            CurrentTextureIndex++;
                         }
 
-                        //Reseta o tempo.
-                        elapsedGameTime = 0;
-                        //Atualiza o sprite atual.
-                        CurrentTexture = Sprites[CurrentTextureIndex].Texture;
+                        CurrentFrameIndex = 0;
                     }
-                }
+                    else
+                    {
+                        CurrentFrameIndex++;
+                    }
 
-                if (IsFinished)
-                {
-                    OnEndAnimation?.Invoke(this);
+                    //Reseta o tempo.
+                    elapsedGameTime = 0;
+                    //Atualiza o sprite atual.
+                    CurrentTexture = Sprites[CurrentTextureIndex].Texture;
                 }
+            }
+
+            if (IsFinished)
+            {
+                OnEndAnimation?.Invoke(this);
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void OnDraw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (IsVisible)
+            if (CurrentTexture != null)
             {
-                if (CurrentTexture != null)
-                {
-                    Vector2 finalOrigin = Origin + Sprites[CurrentTextureIndex].Frames[CurrentFrameIndex].Origin;
+                Vector2 finalOrigin = Origin + Sprites[CurrentTextureIndex].Frames[CurrentFrameIndex].Origin;
 
-                    spriteBatch.Draw(
-                       texture: CurrentTexture,
-                       position: Position,
-                       sourceRectangle: CurrentFrame.Bounds,
-                       color: Color,
-                       rotation: Rotation,
-                       //origin: Origin,
-                       origin: finalOrigin,
-                       scale: Scale,
-                       effects: Effects,
-                       layerDepth: LayerDepth
-                       );
-                }
+                spriteBatch.Draw(
+                   texture: CurrentTexture,
+                   position: Position,
+                   sourceRectangle: CurrentFrame.Bounds,
+                   color: Color,
+                   rotation: Rotation,
+                   //origin: Origin,
+                   origin: finalOrigin,
+                   scale: Scale,
+                   effects: Effects,
+                   layerDepth: LayerDepth
+                   );
             }
         }
 

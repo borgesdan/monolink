@@ -15,7 +15,18 @@ namespace MonoLink.Tiles
         /// <summary>
         /// Obtém ou define o frame a ser utilizado da textura.
         /// </summary>
-        public Rectangle? Frame { get; set; } = null;        
+        public Rectangle? Frame { get; set; } = null;
+
+        public override Rectangle Bounds
+        {
+            get
+            {
+                return GameHelper.GetBounds(new Transform(Position, Vector2.Zero, Scale, 0),
+                Frame.HasValue ? Frame.Value.Width : Texture.Width,
+                Frame.HasValue ? Frame.Value.Height : Texture.Height,
+                Origin);
+            }
+        }
 
         /// <summary>
         /// Inicializa uma nova instância da classe.
@@ -64,14 +75,6 @@ namespace MonoLink.Tiles
                 effects: Effects,
                 layerDepth: 0
                 );
-        }
-
-        public override Rectangle GetBounds()
-        {
-            return GameHelper.GetBounds(new Transform(Position, Vector2.Zero, Scale, 0),
-                Frame.HasValue ? Frame.Value.Width : Texture.Width,
-                Frame.HasValue ? Frame.Value.Height : Texture.Height,
-                Origin);
-        }
+        }        
     }
 }

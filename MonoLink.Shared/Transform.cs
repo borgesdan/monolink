@@ -57,7 +57,7 @@ namespace MonoLink
         /// Inicializa uma nova instância da classe.
         /// </summary>
         /// <param name="t">Uma instância da classe Transform.</param>
-        public Transform3(Transform t)
+        internal Transform3(Transform t)
         {
             transform = t;
         }
@@ -126,7 +126,7 @@ namespace MonoLink
         /// Inicializa uma nova instância da classe.
         /// </summary>
         /// <param name="t">Uma instância da classe Transform.</param>
-        public Transform2(Transform t)
+        internal Transform2(Transform t)
         {
             transform = t;
         }

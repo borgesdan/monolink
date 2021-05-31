@@ -13,6 +13,14 @@ namespace MonoLink.Tiles
         /// </summary>
         public Animation2D Animation { get; } = null;
 
+        public override Rectangle Bounds
+        {
+            get
+            {
+                return Animation.GetBounds();
+            }
+        }
+
         /// <summary>
         /// Inicializa uma nova instância da classe.
         /// </summary>
@@ -47,11 +55,6 @@ namespace MonoLink.Tiles
         protected override void OnDraw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Animation.Draw(gameTime, spriteBatch);
-        }
-
-        public override Rectangle GetBounds()
-        {
-            return Animation.GetBounds();
-        }
+        }        
     }
 }

@@ -29,6 +29,13 @@ namespace MonoLink.Tiles
         internal Color Color { get; set; } = Color.White;        
         /// <summary>Obtém ou define os efeitos de espelhamento.</summary>
         internal SpriteEffects Effects { get; set; } = SpriteEffects.None;
+        /// <summary>Obtém ou define a rotação.</summary>
+        internal float Rotation { get; }
+
+        /// <summary>
+        /// Obtém os limites do tile.
+        /// </summary>
+        public virtual Rectangle Bounds { get; } = Rectangle.Empty;
 
         protected Tile(Game game)
         {
@@ -38,11 +45,12 @@ namespace MonoLink.Tiles
         protected Tile(Tile source)
         {
             this.Game = source.Game;
-            //this.Position = source.Position;
-            //this.Color = source.Color;
-            //this.Effects = source.Effects;        
-            //this.Origin = source.Origin;
-            //this.Scale = source.Scale;
+            this.Value = source.Value;
+            this.Position = source.Position;
+            this.Color = source.Color;
+            this.Effects = source.Effects;
+            this.Origin = source.Origin;
+            this.Scale = source.Scale;
         }
 
         public void Update(GameTime gameTime) 
@@ -62,10 +70,5 @@ namespace MonoLink.Tiles
 
         protected virtual void OnUpdate(GameTime gameTime) { }
         protected virtual void OnDraw(GameTime gameTime, SpriteBatch spriteBatch) { }
-       
-        /// <summary>
-        /// Obtém os limites do tile.
-        /// </summary>
-        public abstract Rectangle GetBounds();
     }
 }

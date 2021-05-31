@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace MonoLink.Tiles
 {
@@ -18,24 +16,32 @@ namespace MonoLink.Tiles
         public Color Color;
         /// <summary>Obtém os efeitos de espelhamento.</summary>
         public SpriteEffects Effects;
+        /// <summary>Obtém o valor da rotação.</summary>
+        public float Rotation;
         /// <summary>Obtém o valor da coordenada no mapa em que se encontra o TileInfo.</summary>
-        public int Value;
+        public int CoordValue;
+        /// <summary>Obtém o valor opcional do Tile.</summary>
+        public int TileValue;
 
         /// <summary>
         /// Cria um novo objeto da estrutura.
         /// </summary>
-        /// <param name="value">O valor da coordenada no mapa em que se encontra o TileInfo.</param>
+        /// <param name="cordValue">O valor da coordenada no mapa em que se encontra o TileInfo.</param>
+        /// <param name="tileValue">O valor opcional do Tile.</param>
         /// <param name="position">A posição do tile.</param>
         /// <param name="scale">A sua escala.</param>
         /// <param name="color">A sua cor.</param>
         /// <param name="effects">Os efeitos de espelhamento.</param>
-        internal TileInfo(int value, Vector2 position, Vector2 scale, Color color, SpriteEffects effects)
+        /// <param name="rotation">Define a rotação.</param>
+        internal TileInfo(int cordValue, int tileValue, Vector2 position, Vector2 scale, Color color, SpriteEffects effects, float rotation)
         {
-            Position = position;
+            Position = position;            
             Scale = scale;
             Color = color;
             Effects = effects;
-            Value = value;
+            Rotation = rotation;
+            CoordValue = cordValue;
+            TileValue = tileValue;
         }       
     }
 }

@@ -7,7 +7,7 @@ namespace MonoLink.Tiles
     /// <summary>
     /// Classe abstrada que desenha tiles na tela através de um array bidimensional de inteiros.
     /// </summary>
-    public abstract class TileReader : ITileReader
+    public class TileReader : ITileReader
     {
         protected int[,] finalMap = null;
         //O estilo do tyle, se retângular ou isometrico
@@ -112,11 +112,13 @@ namespace MonoLink.Tiles
                         y *= Scale.Y;
 
                         TileInfo info;                        
-                        info.Value = index;
+                        info.CoordValue = index;
+                        info.TileValue = Table[index].Value;
                         info.Position = new Vector2(x, y);
                         info.Color = Color.White;
                         info.Effects = SpriteEffects.None;
                         info.Scale = Scale;
+                        info.Rotation = 0F;
 
                         infoList.Add(info);
                         infoIndexList.Add(new Point(row, col), infoList.Count - 1);
@@ -146,7 +148,7 @@ namespace MonoLink.Tiles
         {
             for (int i = 0; i < infoList.Count; i++)
             {
-                var tile = Table[infoList[i].Value];
+                var tile = Table[infoList[i].CoordValue];
                 tile.Position = infoList[i].Position;
                 tile.Color = infoList[i].Color;
                 tile.Scale = infoList[i].Scale;
@@ -278,7 +280,7 @@ namespace MonoLink.Tiles
             tile.Position = info.Position;
             tile.Color = info.Color;
 
-            return tile.GetBounds();
+            return tile.Bounds;
         }
 
         /// <summary>

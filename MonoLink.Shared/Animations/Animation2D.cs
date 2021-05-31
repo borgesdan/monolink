@@ -29,6 +29,8 @@ namespace MonoLink
 
         /// <summary>Retorna True caso o tempo passado seja maior que o tempo total da animação.</summary>
         public bool IsFinished { get; protected set; } = false;
+        /// <summary>Obtém ou define se a animação se repetirá após seu termino.</summary>
+        public bool IsLooping { get; set; } = true;
 
         /// <summary>Obtém ou define a posição.</summary>
         public Vector2 Position { get; set; } = Vector2.Zero;
@@ -43,7 +45,7 @@ namespace MonoLink
         /// <summary>Obtém ou define o LayerDepth no desenho do componente, de 0f a 1f, se necessário.</summary>
         public float LayerDepth { get; set; } = 0;
         /// <summary>Obtém ou define os efeitos de espelhamento.</summary>
-        public SpriteEffects Effects { get; set; } = SpriteEffects.None;
+        public SpriteEffects Effects { get; set; } = SpriteEffects.None;        
 
         /// <summary>Inicializa uma nova instância da classe.</summary>                
         /// <param name="time">O tempo em milisegundos de cada quadro da animação.</param>        
@@ -75,14 +77,34 @@ namespace MonoLink
         /// <summary>
         /// Atualiza a animação.
         /// </summary>
-        /// <param name="gameTime">Providência o tempo de jogo.</param>
-        public abstract void Update(GameTime gameTime);
+        /// <param name="gameTime">Providencia o tempo de jogo.</param>
+        public void Update(GameTime gameTime)
+        {
+            if (IsEnabled)
+            {
+                if (IsFinished && !IsLooping)
+                    return;
+
+                OnUpdate(gameTime);
+            }
+        }
+
         /// <summary>
         /// Desenha a animação.
         /// </summary>
-        /// <param name="gameTime">Providência o tempo de jogo.</param>
+        /// <param name="gameTime">Providencia o tempo de jogo.</param>
         /// <param name="spriteBatch">A instância do SpriteBatch corrente.</param>
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (IsVisible)
+            {
+                OnDraw(gameTime, spriteBatch);
+            }
+        }
+
+        public virtual void OnUpdate(GameTime gameTime) { }
+        public virtual void OnDraw(GameTime gameTime, SpriteBatch spriteBatch) { }
+
         /// <summary>
         /// Redefine a animação.
         /// </summary>

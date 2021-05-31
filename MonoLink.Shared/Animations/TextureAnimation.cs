@@ -71,59 +71,53 @@ namespace MonoLink
             this.Textures = textures;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void OnUpdate(GameTime gameTime)
         {
-            if (IsEnabled)
+            IsFinished = false;
+
+            //Verifica se existem texturas.
+            if (Textures.Count > 0 && Time > 0)
             {
-                IsFinished = false;
+                //Tempo total da animação
+                elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
+                //Tempo para calcular as trocas da textura.
+                elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
 
-                //Verifica se existem texturas.
-                if (Textures.Count > 0 && Time > 0)
-                {                    
-                    //Tempo total da animação
-                    elapsedAnimationTime += gameTime.ElapsedGameTime.Milliseconds;
-                    //Tempo para calcular as trocas da textura.
-                    elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
+                //Se o tempo de jogo é maior que o tempo de animação de cada textura
+                if (elapsedGameTime > Time)
+                {
+                    //Incrementa o index
+                    CurrentIndex++;
+                    //Reseta o tempo que se passou da última textura.
+                    elapsedGameTime = 0;
 
-                    //Se o tempo de jogo é maior que o tempo de animação de cada textura
-                    if (elapsedGameTime > Time)
+                    //Reseta tudo caso o index seja maior do que a quantidade de texturas
+                    //E seta a propriedade IsFinished como true.
+                    if (CurrentIndex > Textures.Count - 1)
                     {
-                        //Incrementa o index
-                        CurrentIndex++;
-                        //Reseta o tempo que se passou da última textura.
-                        elapsedGameTime = 0;
-
-                        //Reseta tudo caso o index seja maior do que a quantidade de texturas
-                        //E seta a propriedade IsFinished como true.
-                        if (CurrentIndex > Textures.Count - 1)
-                        {
-                            elapsedAnimationTime = 0;
-                            CurrentIndex = 0;
-                            IsFinished = true;
-                        }
+                        elapsedAnimationTime = 0;
+                        CurrentIndex = 0;
+                        IsFinished = true;
                     }
                 }
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void OnDraw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (IsVisible)
+            if (CurrentTexture != null)
             {
-                if (CurrentTexture != null)
-                {
-                    spriteBatch.Draw(
-                       texture: CurrentTexture,
-                       position: Position,
-                       sourceRectangle: null,
-                       color: Color,
-                       rotation: Rotation,
-                       origin: Origin,
-                       scale: Scale,
-                       effects: Effects,
-                       layerDepth: LayerDepth
-                       );
-                }
+                spriteBatch.Draw(
+                   texture: CurrentTexture,
+                   position: Position,
+                   sourceRectangle: null,
+                   color: Color,
+                   rotation: Rotation,
+                   origin: Origin,
+                   scale: Scale,
+                   effects: Effects,
+                   layerDepth: LayerDepth
+                   );
             }
         }
 
